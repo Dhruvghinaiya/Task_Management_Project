@@ -37,26 +37,35 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
-    {
-        $this->ensureIsNotRateLimited();
+    // public function authenticate(): void
+    // {
+    //     $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+    //     if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+    //         RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
-        }
+    //         throw ValidationException::withMessages([
+    //             'email' => trans('auth.failed'),
+    //         ]);
+    //     }
 
-        RateLimiter::clear($this->throttleKey());
-    }
+    //     RateLimiter::clear($this->throttleKey());
+    // }
 
     /**
      * Ensure the login request is not rate limited.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+     public function getinsertTableField():array
+     {
+ 
+         return [
+             'email'=>$this->input('email'),
+             'password'=>$this->input('password')
+         ];
+     }
     public function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {

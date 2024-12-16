@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException as ValidationValidationException;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -22,13 +24,31 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $req)
     {
-        $request->authenticate();
+        // $request->authenticate();
 
-        $request->session()->regenerate();
+        // $req->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // return redirect()->intended(route('dashboard', absolute: false));
+        $attributes = $req->getinsertTableField();
+        if(Auth::attempt(['email' => $attributes['email'], 'password' => $attributes['password']])){
+                if(Auth::user()->role ==='admin'){
+                    return redirect()->route('admin.dashboard');
+                }
+                else if(Auth::user()->role ==='employee'){
+                    // return view('Employee.dashboard');
+                    return redirect()->route('employee.dashboard');
+                }
+                else{   
+                    return view('Client.dashboard');
+                }   
+        }   
+        else{
+            throw ValidationValidationException::withMessages([
+                'email' => 'Sorry, those credentials do not match.',
+            ]);
+        }
     }
 
     /**
