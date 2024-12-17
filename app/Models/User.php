@@ -17,11 +17,24 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    // protected $guarded = [];
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
+        'role'
     ];
+
+    
+    public function creator(){
+        return $this->belongsTo(User::class,'created_by');
+    }
+
+    
+    public function updater(){
+        return $this->belongsTo(User::class,'updated_by');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

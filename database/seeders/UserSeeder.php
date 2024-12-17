@@ -18,46 +18,7 @@ class UserSeeder extends Seeder
     {
         
         
-        // $users = [
-        //     [
-        //         'email' => 'admin@example.com',
-        //         'name' => 'Admin User',
-        //         'password' => Hash::make(12345678), // Always hash passwords
-        //         'role' => 'admin',
-        //         'created_by' => null,
-        //         'updated_by' => null,
-        //     ],
-        //     [
-        //         'email' => 'employee@example.com',
-        //         'name' => 'Employee User',
-        //         'password' => Hash::make(12345678),
-        //         'role' => 'employee',
-        //         'created_by' => null,
-        //         'updated_by' => null,
-        //     ],
-        //     [
-        //         'email' => 'client@example.com',
-        //         'name' => 'Client User',
-        //         'password' => Hash::make(12345678),
-        //         'role' => 'client',
-        //         'created_by' => null,
-        //         'updated_by' => null,
-        //     ],
-        // ];
-
-        // foreach ($users as $user) {
-        //     User::updateOrCreate(
-        //         ['email' => $user['email']],
-        //         [
-        //             'name' => $user['name'],
-        //             'password' => $user['password'],
-        //             'role' => $user['role'],
-        //             'created_by' => $user['created_by'],
-        //             'updated_by' => $user['updated_by'],
-        //         ]
-        //     );
-        // }
-
+       
         $this->createOrUpdate([
             'id' => Str::uuid(),
             'name' => 'Admin',

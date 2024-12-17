@@ -37,11 +37,10 @@ class AuthenticatedSessionController extends Controller
                     return redirect()->route('admin.dashboard');
                 }
                 else if(Auth::user()->role ==='employee'){
-                    // return view('Employee.dashboard');
                     return redirect()->route('employee.dashboard');
                 }
                 else{   
-                    return view('Client.dashboard');
+                    return redirect()->route('client.dashboard');
                 }   
         }   
         else{

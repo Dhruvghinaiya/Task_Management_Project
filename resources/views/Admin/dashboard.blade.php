@@ -31,7 +31,7 @@
                 <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
                 <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
                 <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>
-                  <a href="" class="rounded-md ml-72  px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Add New User</a>
+                  <a href="{{route('user.create')}}" class="rounded-md ml-72  px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Add New User</a>
                 
                   <a href="{{route('logout')}}" class="rounded-md ml-72  px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Logout</a>
                 
