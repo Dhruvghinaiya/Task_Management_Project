@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,17 +32,23 @@ class AuthenticatedSessionController extends Controller
         // $req->session()->regenerate();
 
         // return redirect()->intended(route('dashboard', absolute: false));
+        
         $attributes = $req->getinsertTableField();
         if(Auth::attempt(['email' => $attributes['email'], 'password' => $attributes['password']])){
-                if(Auth::user()->role ==='admin'){
+            session(['user_email' => Auth::user()->email]);
+
+                if(Auth::user()->role =='admin'){
                     return redirect()->route('admin.dashboard');
                 }
-                else if(Auth::user()->role ==='employee'){
-                    return redirect()->route('employee.dashboard');
-                }
-                else{   
+                else if(Auth::user()->role =='client'){
                     return redirect()->route('client.dashboard');
+                }
+                else if(Auth::user()->role =='employee'){   
+                    return redirect()->route('employee.dashboard');
                 }   
+                else{
+                    return 'bug';
+                }
         }   
         else{
             throw ValidationValidationException::withMessages([
@@ -55,12 +62,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
-
+        // Auth::guard('web')->logout();
+        Auth::logout();
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function profile(){
+    
+       
+        return view('Admin.profile');   
+       
     }
 }

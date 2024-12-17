@@ -9,7 +9,12 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -54,9 +59,22 @@ Route::middleware('auth')->group(function () {
     
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
     
-    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->name('logout');
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     
-    Route::get('/users',[UserController::class,'create'])->name('user.create');
-    Route::post('register', [UserController::class, 'store'])->name('user.store');
+   
+    //admin 
+        Route::get('/users',[UserController::class,'create'])->name('user.create');
+        Route::post('register', [UserController::class, 'store'])->name('user.store');
+        Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile')->middleware('auth');
+        Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile')->middleware('auth');
+        Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile')->middleware('auth');
+    //employee
+        // Route::get('/profile/{email}',[UserController::class,'profile'])->name('employee.profile');
+
+        //task controllers
+        Route::get('/task',[TaskController::class,'index'])->name('task.index')->middleware('auth');
+        //Project controllers
+        Route::get('/project',[ProjectController::class,'index'])->name('project.index')->middleware('auth');
+        // client controller
+        Route::get('/client',[ClientController::class,'index'])->name('client.index')->middleware('auth');
 });

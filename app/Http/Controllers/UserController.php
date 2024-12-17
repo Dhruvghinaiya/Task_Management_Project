@@ -73,4 +73,16 @@ class UserController extends Controller
     {
         //
     }
+
+    // public function profile(){
+    //     // if(Auth::user()->role=='admin'){
+    //         return view('Admin.profile',['data'=>$data]);
+    //     // }
+    //     // elseif(Auth::user()->role=='employee'){
+    //     //     return view('Employee.profile',['data'=>$data]);
+    //     // }
+    //     // else{
+    //     //     return view('Client.dashboard',['data'=>$data]);
+    //     // }
+    // }
 }
