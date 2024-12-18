@@ -1,25 +1,43 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/dashboard', function () {
-    return view('Admin.dashboard');
-})->middleware(['auth'])->name('admin.dashboard');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/employee/dashboard', function () {
-    return view('Employee.dashboard');
-})->middleware(['auth'])->name('employee.dashboard');
 
-Route::get('client/dashboard', function () {
-    return view('Client.dashboard');
-})->middleware(['auth'])->name('client.dashboard');
+Route::middleware(['role:employee'])->group(function(){
+   
+    Route::get('/employee/dashboard', function () {
+        return view('Employee.dashboard');
+    })->middleware(['role:employee'])->name('employee.dashboard');
+
+    Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile');
+
+   
+});
+
+
+Route::middleware(['role:client'])->group(function(){
+   
+    Route::get('client/dashboard', function () {
+        return view('Client.dashboard');
+    })->middleware(['role:client'])->name('client.dashboard');
+
+    Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile');
+});
+
+
 
 
 Route::middleware('auth')->group(function () {

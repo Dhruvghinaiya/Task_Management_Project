@@ -77,4 +77,12 @@ class AuthenticatedSessionController extends Controller
         return view('Admin.profile');   
        
     }
+
+    public function update(Request $req){
+        $req->validate([
+            // 'name'=>'required',
+            'email'=>'required',
+        ]);
+        return $req;
+    }
 }

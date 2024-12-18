@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         $this->createOrUpdate([
             'id' => Str::uuid(),
             'name' => 'Employee',
-            'email' => 'employee@gmail.com',
+            'email' => 'employee@ gmail.com',
             'password' => Hash::make(12345678),
             'role' => 'employee',
             'created_by' => null,

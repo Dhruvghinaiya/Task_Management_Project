@@ -61,20 +61,40 @@ Route::middleware('auth')->group(function () {
     
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     
+
    
     //admin 
+        // Route::get('/users',[UserController::class,'create'])->name('user.create');
+        // Route::post('register', [UserController::class, 'store'])->name('user.store');
+        // Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile');
+        // Route::patch('/update/profile',[AuthenticatedSessionController::class,'update'])->name('admin.profile.update');
+        // //task controllers
+        // Route::get('/task',[TaskController::class,'index'])->name('task.index')->middleware('auth');
+        // //Project controllers
+        // Route::get('/project',[ProjectController::class,'index'])->name('project.index')->middleware('auth');
+        // // client controller
+        // Route::get('/client',[ClientController::class,'index'])->name('client.index')->middleware('auth');
+
+        // //employee
+        // Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile')->middleware('auth');
+        // //client
+        // Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile')->middleware('auth');
+    });
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard', function () {
+            return view('Admin.dashboard');
+        })->name('admin.dashboard');
         Route::get('/users',[UserController::class,'create'])->name('user.create');
         Route::post('register', [UserController::class, 'store'])->name('user.store');
-        Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile')->middleware('auth');
-        Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile')->middleware('auth');
-        Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile')->middleware('auth');
-    //employee
-        // Route::get('/profile/{email}',[UserController::class,'profile'])->name('employee.profile');
-
+        Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile');
+        Route::patch('/update/profile',[AuthenticatedSessionController::class,'update'])->name('admin.profile.update');
         //task controllers
         Route::get('/task',[TaskController::class,'index'])->name('task.index')->middleware('auth');
         //Project controllers
         Route::get('/project',[ProjectController::class,'index'])->name('project.index')->middleware('auth');
         // client controller
         Route::get('/client',[ClientController::class,'index'])->name('client.index')->middleware('auth');
-});
+    
+    });
+    
