@@ -2,15 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
+    protected  UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository){
+        $this->userRepository= $userRepository;
+    }
+
     public function profile(){
         $email = session('user_email');
         $data = User::where('email',$email)->get();
-            return view('Employee.profile',['data'=>$data]);   
+        return view('Employee.profile',['data'=>$data]);   
+    }
+
+    public function index(){
+        return view('Employee.dashboard');
+    }
+
+    public function update(UpdateProfileRequest $req){
+
+        $this->userRepository->update(Auth::user()->id,$req->getInsertTableField());
+        return redirect()->route('employee.profile')->with('success','user profile update successfully...');
     }
 }

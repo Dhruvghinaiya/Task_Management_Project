@@ -26,10 +26,13 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4  sm:px-6 lg:px-8">
+        @if (session('success'))
+          <x-AlertSuccess :message="session('success')" />
+        @endif
         <div class="isolate bg-white px-6  sm:py-32 lg:px-8">
             <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
             </div>
-            <form action="{{route('admin.profile.update',Auth::user()->email)}}" method="POST" class="mx-auto  max-w-xl">
+            <form action="{{route('admin.profile.update')}}" method="POST" class="mx-auto  max-w-xl">
                     @csrf
                     @method('Patch')
                 <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -56,7 +59,7 @@
                 
             </div>
             <div class="mt-10">
-                <input type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"/>
+                <input type="submit" value="Edit" class="block w-full rounded-md bg-green-600 px-3.5 py-2.5 text-center text-sm font-semibold text-black shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"/>
             </div>
             <div class="mt-10">
                 <a href="{{route('admin.dashboard')}}" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Back</a>

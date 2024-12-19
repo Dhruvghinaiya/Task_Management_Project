@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+        return view('Admin.all_users');   
     }
     
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
 
         // $user = User::create($req->getInsertTableField());
         $this->userRepository->insert($req->getinsertTableField());
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard')->with('success','new user created successfully.');
     }
 
     /**

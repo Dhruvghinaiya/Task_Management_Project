@@ -34,21 +34,22 @@ class AuthenticatedSessionController extends Controller
         // return redirect()->intended(route('dashboard', absolute: false));
         
         $attributes = $req->getinsertTableField();
+
         if(Auth::attempt(['email' => $attributes['email'], 'password' => $attributes['password']])){
             session(['user_email' => Auth::user()->email]);
-
                 if(Auth::user()->role =='admin'){
                     return redirect()->route('admin.dashboard');
                 }
-                else if(Auth::user()->role =='client'){
+                if(Auth::user()->role =='client'){
                     return redirect()->route('client.dashboard');
                 }
                 else if(Auth::user()->role =='employee'){   
                     return redirect()->route('employee.dashboard');
+                    // return view('Employee.dashboard');
                 }   
-                else{
-                    return 'bug';
-                }
+                // else{
+                //     return 'bug';
+                // }
         }   
         else{
             throw ValidationValidationException::withMessages([

@@ -14,8 +14,8 @@
               <x-nav-link href="{{route('task.index')}}"  :active="request()->is('task')" id="demo" >Task</x-nav-link>
               <x-nav-link href="{{route('project.index')}}" :active="request()->is('project')">Projects</x-nav-link>
               <x-nav-link href="{{route('client.index')}}" :active="request()->is('client')">Client</x-nav-link>
-              <x-nav-link href="{{route('client.index')}}" :active="request()->is('t')">View User</x-nav-link>
-              <x-nav-link href="{{route('user.create')}}" :active="request()->is('users')">Add New user</x-nav-link>
+              <x-nav-link href="{{route('user.index')}}" :active="request()->is('all_users')">View User</x-nav-link>
+              <x-nav-link href="{{route('user.create')}}" :active="request()->is('user')">Add New user</x-nav-link>
               <x-nav-link href="{{route('admin.profile')}}" :active="request()->is('profile')">Profile</x-nav-link>
               <x-nav-link href="{{route('logout')}}" :active="request()->is('logout')">logout</x-nav-link>
             </div>

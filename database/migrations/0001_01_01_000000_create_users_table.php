@@ -24,11 +24,20 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('updated_by')->references('id')->on('users')->cascadeOnDelete();
         });
-        
+
+
+        // Schema::create('sessions', function (Blueprint $table) {
+        //     $table->string('id')->primary();
+        //     $table->foreignId('user_id')->nullable()->index();
+        //     $table->string('ip_address', 45)->nullable();
+        //     $table->text('user_agent')->nullable();
+        //     $table->longText('payload');
+        //     $table->integer('last_activity')->index();
+        // });
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->char('user_id', 36)->nullable()->index(); // Define user_id as CHAR(36)
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -42,5 +51,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('sessions');
     }
 };

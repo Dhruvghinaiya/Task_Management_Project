@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -22,10 +23,9 @@ Route::middleware('guest')->group(function () {
         ->name('register');
 
         
-        Route::get('/', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+        // Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
         
-        Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login.logic');
+        // Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.logic');
         
         Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -63,38 +63,36 @@ Route::middleware('auth')->group(function () {
     
 
    
-    //admin 
+    // admin 
         // Route::get('/users',[UserController::class,'create'])->name('user.create');
         // Route::post('register', [UserController::class, 'store'])->name('user.store');
-        // Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile');
-        // Route::patch('/update/profile',[AuthenticatedSessionController::class,'update'])->name('admin.profile.update');
-        // //task controllers
-        // Route::get('/task',[TaskController::class,'index'])->name('task.index')->middleware('auth');
-        // //Project controllers
-        // Route::get('/project',[ProjectController::class,'index'])->name('project.index')->middleware('auth');
-        // // client controller
-        // Route::get('/client',[ClientController::class,'index'])->name('client.index')->middleware('auth');
-
-        // //employee
-        // Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile')->middleware('auth');
-        // //client
-        // Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile')->middleware('auth');
-    });
-
-    Route::middleware(['role:admin'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('Admin.dashboard');
-        })->name('admin.dashboard');
-        Route::get('/users',[UserController::class,'create'])->name('user.create');
-        Route::post('register', [UserController::class, 'store'])->name('user.store');
-        Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile');
-        Route::patch('/update/profile',[AuthenticatedSessionController::class,'update'])->name('admin.profile.update');
+        Route::get('/profile',[AdminController::class,'profile'])->name('admin.profile');
+        Route::patch('/update/profile',[AdminController::class,'update'])->name('admin.profile.update');
         //task controllers
-        Route::get('/task',[TaskController::class,'index'])->name('task.index')->middleware('auth');
         //Project controllers
-        Route::get('/project',[ProjectController::class,'index'])->name('project.index')->middleware('auth');
+        // Route::get('/dashboard', function () {
+        //     return view('Admin.dashboard');
+        // })->name('admin.dashboard');
+        //employee
+        Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile');
+        //client
+        Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile');
+     
+        // Project controllers
+        // // client controller
+        // Route::get('/profile',[AuthenticatedSessionController::class,'profile'])->name('admin.profile');
+        
+        // Route::get('/project',[ProjectController::class,'index'])->name('project.index');
         // client controller
-        Route::get('/client',[ClientController::class,'index'])->name('client.index')->middleware('auth');
-    
+        // Route::get('/client',[ClientController::class,'index'])->name('client.index');
+        // Route::get('/task',[TaskController::class,'index'])->name('task.index');
+        // Route::get('/users',[UserController::class,'create'])->name('user.create');
     });
+    
+    // Route::middleware(['role:admin'])->group(function () {
+        // Route::get('/dashboard', function () {
+        //     return view('Admin.dashboard');
+        // })->name('admin.dashboard');
+        
+    // });
     
