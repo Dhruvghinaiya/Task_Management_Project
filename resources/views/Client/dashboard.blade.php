@@ -25,7 +25,7 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <!-- Your content -->
+        
       </div>
     </main>
   </div>
@@ -33,19 +33,3 @@
 </body>
 </html>
 
-<script>
-    const dropdownButton = document.getElementById('dropdownButton');
-    const dropdownMenu = document.getElementById('dropdownMenu');
-  
-    dropdownButton.addEventListener('click', () => {
-      if (dropdownMenu.classList.contains('hidden')) {
-        dropdownMenu.classList.remove('hidden', 'opacity-0', 'scale-95');
-        dropdownMenu.classList.add('opacity-100', 'scale-100');
-      } else {
-        dropdownMenu.classList.add('opacity-0', 'scale-95');
-        dropdownMenu.classList.remove('opacity-100', 'scale-100');
-        setTimeout(() => dropdownMenu.classList.add('hidden'), 75); // Match the transition duration
-      }
-    });
-  </script>
-  

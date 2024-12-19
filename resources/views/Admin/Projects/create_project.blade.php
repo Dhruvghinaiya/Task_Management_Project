@@ -24,19 +24,14 @@
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">Project</h1>
         <div class="flex gap-5 ml-auto">
-          <a href="{{route('admin.task.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Add Project
-          </a>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Button
-          </button>
+         
         </div>
       </div>
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <h2 class="text-2xl ml-40 mb-4">Add Project</h2>
         <form action="/submit-project" method="POST" class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-6">
-  
             <div class="space-y-2">
               <label for="name" class="block text-sm font-medium text-gray-700">Project Name</label>
               <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">

@@ -2,18 +2,19 @@
 namespace App\Repositories;
 
 use App\Mail\welcomemail;
-use App\Models\User;
+use App\Models\Client_Detail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 
-class UserRepository extends BaseRepository
+class ClientRepository extends BaseRepository
 {
-    public function __construct(User $model)
+    public function __construct(Client_Detail $model)
     {
         parent::__construct($model);
     }
+    
     public function getUser(){
-        return  $this->newQuery()->where('role','client')->get();
+        return  $this->newQuery()->with('user')->get();
     }
 }
 

@@ -35,12 +35,10 @@
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-2xl font-bold mb-6 text-gray-700">Add Company</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-700">Add Client</h2>
             
-            <form action="/submit-form" method="POST" class="space-y-4">
-              <!-- UUID (Primary Key, Hidden) -->
-              <input type="hidden" name="id" value="{{ old('id', Str::uuid()) }}">
-              
+            <form action="{{route('admin.client.store')}}" method="POST" class="space-y-4">
+                @csrf
               <!-- User ID (Foreign Key, Dropdown) -->
               <div>
                 <label for="user_id" class="block text-gray-700 font-medium mb-2">User</label>
@@ -48,10 +46,13 @@
                   class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500">
                   <option value="" disabled selected>Select a user</option>
                   <!-- Loop through users -->
-                  {{-- @foreach ($users as $user) --}}
-                    <option value=""></option>
-                  {{-- @endforeach --}}
+                  @foreach ($data as $client)
+                    <option value="{{$client->id}}">{{$client->name}}</option>
+                  @endforeach
                 </select>
+                @error('user_id')
+                <span style="color: red">{{$message}}</span>
+            @enderror
               </div>
               
               <!-- Company Name -->
@@ -66,6 +67,9 @@
                   value="{{ old('company_name') }}" 
                   required>
               </div>
+              @error('company_name')
+              <span style="color: red">{{$message}}</span>
+          @enderror
               
               <!-- Contact Number -->
               <div>
@@ -79,6 +83,9 @@
                   value="{{ old('contact_number') }}" 
                   required>
               </div>
+              @error('contact_number')
+              <span style="color: red">{{$message}}</span>
+          @enderror
               
               {{-- <!-- Created At (Hidden) -->
               <input type="hidden" name="created_at" value="{{ now() }}">

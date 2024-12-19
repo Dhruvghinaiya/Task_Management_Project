@@ -34,7 +34,7 @@ Route::middleware(['role:admin'])->group(function(){
     //task controllers 
     Route::get('/task',[TaskController::class,'index'])->name('task.index');
     Route::get('task/create',[TaskController::class,'create'])->name('admin.task.create');
-    Route::get('task/store',[TaskController::class,'create'])->name('admin.task.store');
+    Route::post('task/store',[TaskController::class,'create'])->name('admin.task.store');
     Route::get('task/edit',[TaskController::class,'create'])->name('admin.task.edit');
     Route::patch('task/update',[TaskController::class,'create'])->name('admin.task.update');
     Route::delete('task/delete',[TaskController::class,'create'])->name('admin.task.delete');
@@ -42,7 +42,7 @@ Route::middleware(['role:admin'])->group(function(){
     //project controllers 
     Route::get('/project',[ProjectController::class,'index'])->name('project.index');
     Route::get('project/create',[ProjectController::class,'create'])->name('admin.project.create');
-    Route::get('project/store',[ProjectController::class,'create'])->name('admin.project.store');
+    Route::post('project/store',[ProjectController::class,'create'])->name('admin.project.store');
     Route::get('project/edit',[ProjectController::class,'create'])->name('admin.project.edit');
     Route::get('project/update',[ProjectController::class,'create'])->name('admin.project.update');
     Route::get('project/delete',[ProjectController::class,'create'])->name('admin.project.delete');
@@ -50,6 +50,10 @@ Route::middleware(['role:admin'])->group(function(){
     //client
     Route::get('/client',[ClientController::class,'index'])->name('client.index');
     Route::get('/admin/client/create',[ClientController::class,'create'])->name('admin.client.create');
+    Route::post('/admin/client/store',[ClientController::class,'store'])->name('admin.client.store');
+    Route::get('/admin/client/edit/{id}',[ClientController::class,'edit'])->name('admin.client.edit');
+    Route::patch('/admin/client/update/{id}',[ClientController::class,'update'])->name('admin.client.update');
+    Route::delete('/admin/client/delete/{id}',[ClientController::class,'destroy'])->name('admin.client.delete');
 });
 
 
