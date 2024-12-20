@@ -31,14 +31,14 @@ class ClientController extends Controller
     }
 
     public function create(){
-        $client = $this->userRespotirory->getUser();
+        $client = $this->userRespotirory->getClient();
         return view('Admin.Client.client_create',['data'=>$client]);
     }
 
     public function store(StoreClientRequest $req){
 
         $this->clientRepository->insert($req->getInsertTableField());
-        return view('Admin.Client.index');
+        return redirect()->route('client.index');
     }
     
     public function profile(){
@@ -62,7 +62,6 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
-        // return $id;
         $this->clientRepository->destroy($id);
         return redirect()->route('client.index')->with('success', 'Client detail deleted successfully');
     }

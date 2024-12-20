@@ -29,6 +29,9 @@
         @if (session('success'))
           <x-AlertSuccess :message="session('success')" />
         @endif
+        @if (session('error'))
+          <x-AlertError :message="session('error')" />
+        @endif
         <div class="isolate bg-white px-6  sm:py-32 lg:px-8">
             <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
             </div>

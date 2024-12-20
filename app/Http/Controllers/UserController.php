@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Throwable;
 
 class UserController extends Controller
 {   protected UserRepository $userRepository;
@@ -19,8 +22,9 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return view('Admin.all_users');   
+    {   
+        $users = $this->userRepository->getAll();   
+        return view('Admin.user.index',compact('users'));   
     }
     
     /**
@@ -28,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-          return view('Admin.user');
+          return view('Admin.user.create');
     }
 
     /**
@@ -36,53 +40,52 @@ class UserController extends Controller
      */
     public function store(RegisterUserRequest $req)
     {   
+        Db::beginTransaction();
+        try{
+            $this->userRepository->store($req->getinsertTableField());
+            DB::commit();
+            return redirect()->route('admin.dashboard')->with('success','new user created successfully.');
+        }
+        catch(Throwable $e){
+            DB::rollBack();
+            return redirect()->route('admin.user.create')->with('error','new user created successfully.');
+        }
 
-        // $user = User::create($req->getInsertTableField());
-        $this->userRepository->insert($req->getinsertTableField());
-        return redirect()->route('admin.dashboard')->with('success','new user created successfully.');
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+  
+
+    public function edit($id)
+    {   
+        $user = $this->userRepository->getById($id);
+        return view('Admin.user.edit',['users'=>$user]);
+    }
+
+    public function update( UpdateUserRequest $req , $id)
+    {   
+        DB::beginTransaction();
+        try {
+            $this->userRepository->update($id, $req->getinsertTableField());
+            DB::commit();
+            return redirect()->route('admin.user.index')->with('success', 'User Updated Successfully');
+        } catch (Throwable $e) {
+            DB::rollBack();
+            return redirect()->route('admin.user.edit',$id)->with('error', $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $this->userRepository->destroy($id);
+            DB::commit();
+            return redirect()->route('admin.user.index')->with('success', 'User Deleted Successfully');
+        } catch (Throwable $e) {
+            DB::rollBack();
+            return redirect()->route('admin.user.index')->with('error', $e->getMessage());
+        }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    // public function profile(){
-    //     // if(Auth::user()->role=='admin'){
-    //         return view('Admin.profile',['data'=>$data]);
-    //     // }
-    //     // elseif(Auth::user()->role=='employee'){
-    //     //     return view('Employee.profile',['data'=>$data]);
-    //     // }
-    //     // else{
-    //     //     return view('Client.dashboard',['data'=>$data]);
-    //     // }
-    // }
+   
 }

@@ -26,15 +26,13 @@
           <a href="{{route('admin.client.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Add Client
           </a>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Button
-          </button>
+        
         </div>
       </div>
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="max-w-md mx-auto bg-white border rounded px-8 pt-6 pb-8 mb-4">
             <h2 class="text-2xl font-bold mb-6 text-gray-700">Add Client</h2>
             
             <form action="{{route('admin.client.store')}}" method="POST" class="space-y-4">

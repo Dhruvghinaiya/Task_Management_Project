@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-    // protected $keyType = 'string'; 
+    protected $keyType = 'string'; 
     public $incrementing = false;
     // protected $keyType = 'string'; 
     // public $incrementing = false; 
@@ -27,14 +27,37 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'created_by',
+        'updated_by',
     ];
     public function client()
     {
         return $this->hasMany(Client::class);
     }
         
+    public function project()
+    {
+        return $this->belongsToMany(Project::class, 'project_employees', 'user_id', 'project_id');
+    }
 
+
+    public function projectsAsClient()
+    {
+        return $this->hasMany(Project::class, 'client_id');
+    }
+
+    // A user can have many projects as a creator
+    public function projectsCreated()
+    {
+        return $this->hasMany(Project::class, 'created_by');
+    }
+
+    // A user can have many projects as an updater
+    public function projectsUpdated()
+    {
+        return $this->hasMany(Project::class, 'updated_by');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -69,4 +92,6 @@ class User extends Authenticatable
             }
         });
     }
+
+    
 }

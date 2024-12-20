@@ -1,10 +1,10 @@
 <?php
 namespace App\Repositories;
 
-use App\Mail\welcomemail;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Collection;
+
+use function Pest\Laravel\get;
 
 class UserRepository extends BaseRepository
 {
@@ -12,9 +12,17 @@ class UserRepository extends BaseRepository
     {
         parent::__construct($model);
     }
-    public function getUser(){
-        return  $this->newQuery()->where('role','client')->get();
+   
+    public function getClient(){
+        return $this->newQuery()
+        ->where('role' ,'client')->get();
+    }
+
+    public function getAllEmployees()
+    {
+        return $this->newQuery()
+            ->where('role', 'employee')
+            ->get();
     }
 }
-
 

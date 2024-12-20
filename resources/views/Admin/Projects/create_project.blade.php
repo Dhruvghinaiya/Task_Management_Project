@@ -31,7 +31,16 @@
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h2 class="text-2xl ml-40 mb-4">Add Project</h2>
-        <form action="/submit-project" method="POST" class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-6">
+        
+        @if (session('success'))
+        <x-AlertSuccess :message="session('success')" />
+        @endif
+        @if (session('error'))
+        <x-AlertSuccess :message="session('error')" />
+        @endif
+
+        <form action="{{route('admin.project.store')}}" method="POST" class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-6">
+          @csrf
             <div class="space-y-2">
               <label for="name" class="block text-sm font-medium text-gray-700">Project Name</label>
               <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
@@ -42,13 +51,49 @@
               <textarea id="description" name="description" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
             </div>
           
-            <div class="space-y-2">
-              <label for="client_id" class="block text-sm font-medium text-gray-700">Client</label>
+            {{-- <div class="space-y-2">
+              <label for="client_id" class="block text-sm font-medium text-gray-700">Assign Client</label>
               <select id="client_id" name="client_id" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                <!-- Populate from users table for clients -->
+                @foreach ($clients as $client )
+                <option value="{{$client->id}}" >{{$client->name}}</option>
+                @endforeach
               </select>
-            </div>
-          
+            </div> --}}
+
+            
+            <div>
+              <label for="client_id" class="block text-sm font-medium text-gray-700">Assign Client</label>
+              <div class="mt-1">
+                  <select name="client_id" id="client_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                      <option value="" {{ old('client_id') ? '' : 'selected' }}>No Client</option>
+                      @foreach($clients as $client)
+                          <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                      @endforeach
+                  </select>
+              </div>
+              @error('client_id')
+                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+              @enderror
+          </div>
+            
+            <div>
+              <label for="employee_id" class="block text-sm font-medium text-gray-700">Assign Employee</label>
+              <div class="mt-1">
+                  <select name="employee_id" id="employee_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                      <option value="" {{ old('employee_id') ? '' : 'selected' }}>No Employee</option>
+                      @foreach($employees as $employee)
+                          <option value="{{ $employee->id }}" 
+                              {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                              {{ $employee->name }}
+                          </option>
+                      @endforeach
+                  </select>
+              </div>
+              @error('employee_id')
+                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+              @enderror
+          </div>
+
             <div class="grid grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>

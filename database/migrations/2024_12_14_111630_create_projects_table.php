@@ -12,20 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Primary key as UUID
-            $table->string('name'); // Project name
-            $table->text('description')->nullable(); // Description, nullable
-            $table->uuid('client_id')->nullable(); // Foreign key to users table, nullable
-            $table->uuid('created_by'); // Foreign key to users table
-            $table->uuid('updated_by'); // Foreign key to users table
-            $table->date('start_date')->nullable(); // Start date, nullable
-            $table->date('end_date')->nullable(); // End date, nullable
-            $table->timestamps(); // created_at and updated_at
-
-            // Foreign key constraints
-            $table->foreign('client_id')->references('id')->on('users')->nullOnDelete();
-            $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('updated_by')->references('id')->on('users')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->text('description');
+            $table->foreignUuid('client_id')->nullable()->constrained('users');
+            $table->foreignUuid('created_by')->constrained('users');
+            $table->foreignUuid('updated_by')->constrained('users');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->timestamps();
         });
     }
 

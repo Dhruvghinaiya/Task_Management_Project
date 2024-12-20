@@ -26,11 +26,18 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('l
 Route::middleware(['role:admin'])->group(function(){
     Route::get('/admin/dashboard',[AdminController::class,'index'])->name('admin.dashboard');
     Route::get('/all_users',[UserController::class,'index'])->name('user.index');
-    Route::get('/user',[UserController::class,'create'])->name('user.create');
     Route::get('/profile',[AdminController::class,'profile'])->name('admin.profile');
     Route::patch('/update/profile/',[AdminController::class,'update'])->name('admin.profile.update');
     Route::post('register', [UserController::class, 'store'])->name('user.store');        Route::patch('/update/profile',[AuthenticatedSessionController::class,'update'])->name('admin.profile.update');
     
+    //user
+    Route::get('/user',[UserController::class,'index'])->name('admin.user.index');
+    Route::get('/user/create',[UserController::class,'create'])->name('admin.user.create');
+    Route::get('/user/store',[UserController::class,'store'])->name('admin.user.store');
+    Route::get('/user/edit/{id}',[UserController::class,'edit'])->name('admin.user.edit');
+    Route::patch('/user/update/{id}',[UserController::class,'update'])->name('admin.user.update');
+    Route::delete('/user/destroy/{id}',[UserController::class,'destroy'])->name('admin.user.destroy');
+
     //task controllers 
     Route::get('/task',[TaskController::class,'index'])->name('task.index');
     Route::get('task/create',[TaskController::class,'create'])->name('admin.task.create');
@@ -40,20 +47,21 @@ Route::middleware(['role:admin'])->group(function(){
     Route::delete('task/delete',[TaskController::class,'create'])->name('admin.task.delete');
     
     //project controllers 
-    Route::get('/project',[ProjectController::class,'index'])->name('project.index');
+    Route::get('/project',[ProjectController::class,'index'])->name('admin.project.index');
     Route::get('project/create',[ProjectController::class,'create'])->name('admin.project.create');
-    Route::post('project/store',[ProjectController::class,'create'])->name('admin.project.store');
-    Route::get('project/edit',[ProjectController::class,'create'])->name('admin.project.edit');
-    Route::get('project/update',[ProjectController::class,'create'])->name('admin.project.update');
-    Route::get('project/delete',[ProjectController::class,'create'])->name('admin.project.delete');
+    Route::post('project/store',[ProjectController::class,'store'])->name('admin.project.store');
+    Route::get('project/edit/{id}',[ProjectController::class,'edit'])->name('admin.project.edit');
+    Route::patch('project/update/{id}',[ProjectController::class,'update'])->name('admin.project.update');
+    Route::delete('project/delete/{id}',[ProjectController::class,'destroy'])->name('admin.project.delete');
+    Route::get('project/show/{id}',[ProjectController::class,'show'])->name('admin.project.show');
         
     //client
     Route::get('/client',[ClientController::class,'index'])->name('client.index');
-    Route::get('/admin/client/create',[ClientController::class,'create'])->name('admin.client.create');
-    Route::post('/admin/client/store',[ClientController::class,'store'])->name('admin.client.store');
-    Route::get('/admin/client/edit/{id}',[ClientController::class,'edit'])->name('admin.client.edit');
-    Route::patch('/admin/client/update/{id}',[ClientController::class,'update'])->name('admin.client.update');
-    Route::delete('/admin/client/delete/{id}',[ClientController::class,'destroy'])->name('admin.client.delete');
+    Route::get('/client/create',[ClientController::class,'create'])->name('admin.client.create');
+    Route::post('/client/store',[ClientController::class,'store'])->name('admin.client.store');
+    Route::get('/client/edit/{id}',[ClientController::class,'edit'])->name('admin.client.edit');
+    Route::patch('/client/update/{id}',[ClientController::class,'update'])->name('admin.client.update');
+    Route::delete('/client/delete/{id}',[ClientController::class,'destroy'])->name('admin.client.delete');
 });
 
 

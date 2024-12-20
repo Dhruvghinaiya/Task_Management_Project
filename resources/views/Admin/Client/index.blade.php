@@ -24,7 +24,7 @@
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">Client</h1>
         <div class="flex gap-5 ml-auto">
           <a href="{{route('admin.client.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Add Client
+            Add Client Details
           </a>
         
         </div>
@@ -50,7 +50,6 @@
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-200 text-gray-600">
                     <tr>
-                        <th class="px-4 py-2 text-left">ID</th>
                         <th class="px-4 py-2 text-left">Name</th>
                         <th class="px-4 py-2 text-left">Company Name</th>
                         <th class="px-4 py-2 text-left">Company Mobile</th>
@@ -60,7 +59,6 @@
                 <tbody class="text-gray-700">
                   @foreach ($data as $client )
                   <tr class="border-t hover:bg-gray-100 ">
-                    <td class="px-4 py-3">{{$client->id}}</td>
                     <td class="px-4 py-3">{{$client->user->name}}</td>
                     <td class="px-4 py-3">{{$client->company_name}}</td>
                     <td class="px-4 py-3">{{$client->contact_number}}</td>

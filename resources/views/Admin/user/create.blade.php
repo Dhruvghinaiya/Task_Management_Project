@@ -25,6 +25,15 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+
+        
+        @if (session('success'))
+        <x-AlertSuccess :message="session('success')" />
+        @endif
+        @if (session('error'))
+        <x-AlertError :message="session('error')" />
+        @endif
+
         <div class="flex min-h-full flex-col justify-center px-6 lg:px-8 ">
           <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             {{-- <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"> --}}
@@ -80,7 +89,7 @@
                 </div>
       
               <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button>
               </div>
               <div>
                   <a href="{{route('admin.dashboard')}}" class="flex w-full justify-center rounded-md bg-red-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600">Back</a>

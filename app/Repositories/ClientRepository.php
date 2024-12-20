@@ -14,6 +14,7 @@ class ClientRepository extends BaseRepository
     }
     
     public function getUser(){
+        
         return  $this->newQuery()->with('user')->get();
     }
 }

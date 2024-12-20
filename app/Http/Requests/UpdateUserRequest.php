@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class RegisterUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,26 +22,21 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
-    //    dd($this);   
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8', // Password must be at least 8 characters
+            'email' => 'required|email',
             'role' => 'required|in:admin,employee,client', 
         ];
-
     }
+
     public function getinsertTableField():array
     {
-        // dd(Auth::user()->id);
         return [
-            // 'id' => \Illuminate\Support\Str::uuid(),
             'name' => $this->input('name'),
             'email' => $this->input('email'),
-            'password' => bcrypt($this->input('password')), // Always hash passwords
             'role' => $this->input('role'),
-            'created_by' => Auth::user()->id, // Get the currently authenticated user's ID
-            'updated_by' => null,
+            'created_by'=>$this->input('created_by'),
+            'updated_by' => Auth::user()->id, 
         ];
     }
 }
