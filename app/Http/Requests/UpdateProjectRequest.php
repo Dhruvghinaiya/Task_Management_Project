@@ -27,13 +27,12 @@ class UpdateProjectRequest extends FormRequest
             'description'=>'required',
             'client_id'=>'required',
             'start_date'=>'required',
-            'end_date'=>'required',
+            'end_date'=>'required|after_or_equal:start_date',
         ];
     }
 
     public function getInsertTableField(){
         return [
-            'id'=>Str::uuid(), 
             'name' => $this->input('name'),
             'description' => $this->input('description'),   
             'client_id' => $this->input('client_id'),

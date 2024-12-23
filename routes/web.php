@@ -2,7 +2,13 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Client\AdminController as ClientAdminController;
+use App\Http\Controllers\Client\ProjectController as ClientProjectController;
+use App\Http\Controllers\Client\TaskController as ClientTaskController;
+use App\Http\Controllers\Employee\AdminController as EmployeeAdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Employee\ProjectController as EmployeeProjectController;
+use App\Http\Controllers\Employee\TaskController as EmployeeTaskController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -12,16 +18,13 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-
-// });
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::middleware('guest')->group(function () {
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.logic');
-
-
-// Route::get('/dashboard', function () {
-//      return view('Admin.dashboard');
-// })->name('admin.dashboard')->middleware(['auth']);
+});
 
 Route::middleware(['role:admin'])->group(function(){
     Route::get('/admin/dashboard',[AdminController::class,'index'])->name('admin.dashboard');
@@ -39,12 +42,13 @@ Route::middleware(['role:admin'])->group(function(){
     Route::delete('/user/destroy/{id}',[UserController::class,'destroy'])->name('admin.user.destroy');
 
     //task controllers 
-    Route::get('/task',[TaskController::class,'index'])->name('task.index');
-    Route::get('task/create',[TaskController::class,'create'])->name('admin.task.create');
-    Route::post('task/store',[TaskController::class,'create'])->name('admin.task.store');
-    Route::get('task/edit',[TaskController::class,'create'])->name('admin.task.edit');
-    Route::patch('task/update',[TaskController::class,'create'])->name('admin.task.update');
-    Route::delete('task/delete',[TaskController::class,'create'])->name('admin.task.delete');
+    Route::get('admin/task',[TaskController::class,'index'])->name('admin.task.index');
+    Route::get('admin/task/show/{task}',[TaskController::class,'show'])->name('admin.task.show');
+    Route::get('admin/task/create',[TaskController::class,'create'])->name('admin.task.create');
+    Route::post('task/store',[TaskController::class,'store'])->name('admin.task.store');
+    Route::get('admin/task/edit/{task}',[TaskController::class,'edit'])->name('admin.task.edit');
+    Route::patch('task/update/{id}',[TaskController::class,'update'])->name('admin.task.update');
+    Route::delete('task/delete/{task}',[TaskController::class,'destroy'])->name('admin.task.delete');
     
     //project controllers 
     Route::get('/project',[ProjectController::class,'index'])->name('admin.project.index');
@@ -56,7 +60,8 @@ Route::middleware(['role:admin'])->group(function(){
     Route::get('project/show/{id}',[ProjectController::class,'show'])->name('admin.project.show');
         
     //client
-    Route::get('/client',[ClientController::class,'index'])->name('client.index');
+    Route::get('/client',[ClientController::class,'index'])->name('admin.client.index');
+    Route::get('/client/show',[ClientController::class,'show'])->name('admin.client.show');
     Route::get('/client/create',[ClientController::class,'create'])->name('admin.client.create');
     Route::post('/client/store',[ClientController::class,'store'])->name('admin.client.store');
     Route::get('/client/edit/{id}',[ClientController::class,'edit'])->name('admin.client.edit');
@@ -65,17 +70,21 @@ Route::middleware(['role:admin'])->group(function(){
 });
 
 
-
-
-
 Route::middleware('role:client')->group(function () {
    
-    Route::get('client/dashboard', function () {
-        return view('Client.dashboard');
-    })->name('client.dashboard')->middleware(['auth']);
- 
-    Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile');
-    Route::Patch('/client/profile/update',[ClientController::class,'update'])->name('client.profile.update');
+    Route::get('/client/dashboard',[ClientAdminController::class,'index'])->name('client.dashboard');
+    Route::get('/client/profile',[ClientAdminController::class,'profile'])->name('client.profile');
+    Route::Patch('/client/profile/update',[ClientAdminController::class,'update'])->name('client.profile.update');
+
+    //project
+    Route::get('/client/project',[ClientProjectController::class,'index'])->name('client.project.index');
+    Route::get('/client/project/show/{id}',[ClientProjectController::class,'show'])->name('client.project.show');
+
+    //task
+    Route::get('client/task',[ClientTaskController::class,'index'])->name('client.task.index');
+    Route::get('client/task/show/{id}',[ClientTaskController::class,'show'])->name('client.task.show');
+
+
 });
 
 
@@ -83,9 +92,20 @@ Route::middleware('role:client')->group(function () {
         Route::get('employee/dashboard',[EmployeeController::class,'index'])->name('employee.dashboard');
         Route::get('/employee/profile',[EmployeeController::class,'profile'])->name('employee.profile');
         Route::patch('employee/profile/update',[EmployeeController::class,'update'])->name('employee.profile.update');
+
+        //project
+            Route::get('/employee/project/',[EmployeeProjectController::class,'index'])->name('employee.project.index');
+            Route::get('/employee/project/show/{id}',[EmployeeProjectController::class,'show'])->name('employee.project.show');
+
+        //task
+            Route::get('employee/task',[TaskController::class,'index'])->name('employee.task.index');
+            Route::get('task/create',[TaskController::class,'create'])->name('employee.task.create');
+            Route::post('task/store',[TaskController::class,'store'])->name('employee.task.store');        
+            Route::get('task/show/{id}',[EmployeeTaskController::class,'show'])->name('employee.task.show');
+            Route::get('task/edit/{id}',[EmployeeTaskController::class,'edit'])->name('employee.task.edit');
+            Route::patch('employee/task/update/{id}',[EmployeeTaskController::class,'update'])->name('employee.task.update');
     });
 
-Route::get('/client/profile',[ClientController::class,'profile'])->name('client.profile');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

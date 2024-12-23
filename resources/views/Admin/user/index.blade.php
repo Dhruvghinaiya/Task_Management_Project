@@ -8,14 +8,7 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+  
 <div class="min-h-full">
     <x-admin-header/>
     
@@ -64,7 +57,7 @@
                           <td class="py-2 px-4 text-gray-700 
                             @if($user->role == 'admin') text-red-500 
                             @elseif($user->role == 'employee') text-green-500 
-                            @else text-blue-600
+                            @elseif($user->role=='client') text-blue-800
                             @endif">
                             {{ ucfirst($user->role) }}
                         </td>

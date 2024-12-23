@@ -36,9 +36,9 @@ class ProjectController extends Controller
     
     public function show($id){
 
-        $project = $this->ProjectRepostiry->getById($id);
-
-        return view('Admin.Projects.project_details',compact('project'));
+         $project = $this->ProjectRepostiry->getById($id);
+          $client= $this->userRepostiry->getById($project->client_id);
+        return view('Admin.Projects.project_details',compact('project','client'));
     }
 
     public function create(){
@@ -49,17 +49,18 @@ class ProjectController extends Controller
 
     }
     public function store(StoreProjectRequest $req){
-        $this->ProjectRepostiry->store($req->getInsertTableField());
+        DB::beginTransaction();
         try {
+            $this->ProjectRepostiry->store($req->getInsertTableField());
           $project=  $this->ProjectRepostiry->store($req->getInsertTableField());
-
             if ($req->has('employee_id') && !empty($req->employee_id)) {
                 $project->users()->attach($req->employee_id); 
             }
-
+            DB::commit();
             return redirect()->route('admin.project.index')->with('success', 'New project created successfully');
 
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
+            DB::rollBack();
             return back()->with('error', 'Failed to create project: ' . $e->getMessage());
         }
     }
@@ -67,18 +68,20 @@ class ProjectController extends Controller
         $project = $this->ProjectRepostiry->getById($id);
         $clients = $this->userRepostiry->getClient();     
         $employees = $this->userRepostiry->getAllEmployees();
+        
         return view('Admin.Projects.edit',compact('project','clients','employees'));
     }
 
     public function update(UpdateProjectRequest $req ,$id){
 
-        // return $id;
+        DB::beginTransaction();
         try{
-            // return $req->getInsertTableField();
-            $this->ProjectRepostiry->update($id,$req->getInsertTableField());
+             $this->ProjectRepostiry->update($id,$req->getInsertTableField());
+            DB::commit();
             return redirect()->route('admin.project.index')->with('success','Edit Project Successfully...');
         }
-        catch(\Exception $e){
+        catch(Throwable $e){
+            DB::rollBack();
             return back()->with('error',$e->getMessage());
         }
 

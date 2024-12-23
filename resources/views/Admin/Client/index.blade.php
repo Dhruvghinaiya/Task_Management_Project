@@ -26,6 +26,9 @@
           <a href="{{route('admin.client.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Add Client Details
           </a>
+          <a href="{{route('admin.client.show')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            View All Clients
+          </a>
         
         </div>
       </div>
@@ -57,11 +60,11 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
-                  @foreach ($data as $client )
+                  @foreach ($clients as $client )
                   <tr class="border-t hover:bg-gray-100 ">
                     <td class="px-4 py-3">{{$client->user->name}}</td>
-                    <td class="px-4 py-3">{{$client->company_name}}</td>
-                    <td class="px-4 py-3">{{$client->contact_number}}</td>
+                    <td class="px-4 py-3">{{$client->company_name ?? 'N/A'}}</td>
+                    <td class="px-4 py-3">{{$client->contact_number ?? 'N/A'}}</td>
                     <td class="px-4 py-3 text-center">
 
                       <div class="flex gap-4">

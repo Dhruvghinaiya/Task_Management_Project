@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -20,7 +22,7 @@
         @endif
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
-        <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
+        {{-- <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
             <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" alt="Laravel background" />
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
@@ -171,6 +173,113 @@
                     </footer>
                 </div>
             </div>
+        </div> --}}
+{{-- 
+    <!-- Header Section -->
+    <header class="bg-blue-600 p-4 shadow-md">
+        <h1 class="text-3xl font-semibold">Task Management</h1>
+        <div class="max-w-7xl mx-auto flex justify-end items-center  gap-3 text-white">
+            @guest
+                
+            <a href="/login" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Login
+            </a>
+            @endguest
+            @auth
+             @if(Auth::user()->role==='admin')    
+            <a href="{{route('admin.dashboard')}}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Dashboard
+            </a>
+            @elseif (Auth::user()->role==='employee')
+            <a href="{{route('employee.dashboard')}}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Dashboard
+            </a>
+            @elseif(Auth::user()->role==='client')
+            <a href="{{route('client.dashboard')}}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Dashboard
+            </a>
+            @endif
+            <a href="{{route('logout')}}" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Logout
+            </a>
+            @endauth
+            
         </div>
+    </header>
+
+    <!-- Welcome Section -->
+    <section class="bg-blue-100 py-16 text-center">
+        <h2 class="text-4xl font-bold text-blue-700">Welcome to Task Management</h2>
+        <p class="mt-4 text-lg text-gray-600">Manage your tasks efficiently and stay productive!</p>
+    </section>
+
+   
+    <!-- Footer Section -->
+    <footer class="bg-blue-600  text-white py-6 mt-80">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-lg">&copy; 2024 Task Management Project</p>
+            <p class="mt-2 text-sm">Designed with care using Tailwind CSS</p>
+        </div>
+    </footer> --}}
+
+    {{-- @extends('layouts.app') <!-- If you are using a layout --> --}}
+
+{{-- @section('content') --}}
+<div class="min-h-screen flex flex-col bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-semibold">Task Management System</h1>
+            
+            <div>
+                <!-- Login Button (Visible if user is not authenticated) -->
+                @guest
+                    <a href="{{ route('login') }}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">Login</a>
+                @endguest
+
+                <!-- Dashboard & Logout Buttons (Visible if user is authenticated) -->
+                @auth
+                    @if(Auth::user()->role==='admin')    
+                    <a href="{{route('admin.dashboard')}}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                        Dashboard
+                    </a>
+                    @elseif (Auth::user()->role==='employee')
+                    <a href="{{route('employee.dashboard')}}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                        Dashboard
+                    </a>
+                    @elseif(Auth::user()->role==='client')
+                    <a href="{{route('client.dashboard')}}" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">
+                        Dashboard
+                    </a>
+                    @endif
+                    <a href="{{route('logout')}}" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 ml-5 px-4 rounded-lg">
+                        Logout
+                    </a>
+                    </form>
+                @endauth
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="flex-grow py-8">
+        
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-blue-600 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Task Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+</div>
+{{-- @endsection --}}
+
+
+</body>
+</html>
+
     </body>
 </html>

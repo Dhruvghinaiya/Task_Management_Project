@@ -48,7 +48,7 @@ class UserController extends Controller
         }
         catch(Throwable $e){
             DB::rollBack();
-            return redirect()->route('admin.user.create')->with('error','new user created successfully.');
+            return redirect()->route('admin.user.create')->with('error',$e->getMessage());
         }
 
 

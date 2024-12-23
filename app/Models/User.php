@@ -31,9 +31,14 @@ class User extends Authenticatable
         'created_by',
         'updated_by',
     ];
-    public function client()
+    // public function client()
+    // {
+    //     return $this->hasMany(Client_Detail::class,'user_id');
+    // }
+
+    public function clientDetail()
     {
-        return $this->hasMany(Client::class);
+        return $this->hasOne(Client_Detail::class, 'user_id', 'id');
     }
         
     public function project()

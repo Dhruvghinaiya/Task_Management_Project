@@ -44,12 +44,16 @@
 
 
             
-            <p class="mt-4 text-sm text-gray-500">
+            <p class="mt-4 text-sm text-gray-500 ">
               <strong>Start Date:</strong> {{ $project->start_date->format('M d, Y') }}
             </p>
             
+            
             <p class="mt-2 text-sm text-gray-500">
               <strong>End Date:</strong> {{$project->end_date->format('M d,Y') }}
+            </p>
+            <p class="mt-4 text-sm text-gray-500 ">
+              <strong>Client Name:</strong> {{ $client->name }}
             </p>
             
             <div class="mt-6 flex space-x-4">

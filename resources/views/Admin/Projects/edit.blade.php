@@ -89,16 +89,6 @@
                     @error('employee_id')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     <div class="mt-4">
                         <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
                         <input type="date" id="start_date" name="start_date" 

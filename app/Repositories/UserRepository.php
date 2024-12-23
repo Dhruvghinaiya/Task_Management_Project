@@ -17,6 +17,13 @@ class UserRepository extends BaseRepository
         return $this->newQuery()
         ->where('role' ,'client')->get();
     }
+    // public function getClient()
+    // {
+    //     return $this->newQuery()
+    //         ->where('role', 'client')
+    //         ->with('client') // Eager load the client relationship
+    //         ->get();
+    // }
 
     public function getAllEmployees()
     {
@@ -24,5 +31,15 @@ class UserRepository extends BaseRepository
             ->where('role', 'employee')
             ->get();
     }
+
+    public function getRecentUsersByRole(string $role, int $limit)
+    {
+        return $this->newQuery()
+            ->where('role', $role)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+    
 }
 

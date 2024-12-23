@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+@php
+    use App\Enums\RoleEnum;
+@endphp<!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
@@ -80,9 +83,12 @@
                   <div class="mt-2">
                     {{-- <input type="email" name="email" id="email" autocomplete="email"  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"> --}}
                     <select name="role" id="role" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                        <option value="admin">Admin</option>
-                        <option value="client">Client</option>
-                        <option value="employee">Employee</option>
+                      @foreach (RoleEnum::cases() as $case )
+                        
+                      <option value="{{$case}}">{{$case}}</option>
+                      {{-- <option value="client">Client</option> --}}
+                      {{-- <option value="employee">Employee</option> --}}
+                      @endforeach
                     </select>
                    
                   </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\RoleEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Enum;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -27,7 +29,7 @@ class RegisterUserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8', // Password must be at least 8 characters
-            'role' => 'required|in:admin,employee,client', 
+            'role' => 'required',new Enum(RoleEnum::class), 
         ];
 
     }

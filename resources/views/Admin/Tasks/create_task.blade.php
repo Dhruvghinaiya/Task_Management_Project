@@ -8,14 +8,7 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+  
 <div class="min-h-full">
     <x-admin-header/>
     
@@ -27,11 +20,11 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <form action="/submit-task" method="POST" class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-6">
-  
+        <form action="{{route('admin.task.store')}}" method="POST" class="max-w-4xl mx-auto p-6 bg-white shadow-md border rounded-lg space-y-6">
+          @csrf
           <div class="space-y-2">
             <label for="task_name" class="block text-sm font-medium text-gray-700">Task Name</label>
-            <input type="text" id="task_name" name="task_name" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+            <input type="text" id="task_name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
           </div>
         
           <div class="space-y-2">
@@ -47,20 +40,36 @@
               <option value="completed">Completed</option>
             </select>
           </div>
-        
-          <div class="space-y-2">
-            <label for="project_id" class="block text-sm font-medium text-gray-700">Project</label>
-            <select id="project_id" name="project_id" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-              <!-- Populate from projects table -->
-            </select>
-          </div>
-        
-          <div class="space-y-2">
-            <label for="assigned_to" class="block text-sm font-medium text-gray-700">Assigned To</label>
-            <select id="assigned_to" name="assigned_to" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-              <!-- Populate from users table -->
-            </select>
-          </div>
+           
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="project_id" class="block text-sm font-medium text-gray-700">Project</label>
+                <select 
+                    name="project_id" 
+                    id="project_id" 
+                    class="w-full m-1 p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
+                    <option value="">Select a project</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label for="assigned_to" class="block text-sm font-medium text-gray-700">Assigned To</label>
+                <select 
+                    name="assigned_to" 
+                    id="assigned_to" 
+                    class="w-full mt-1 p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
+                    <option value="">Unassigned</option>
+                    @foreach($employees as $employee)
+                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
         
           <div class="grid grid-cols-2 gap-6">
             <div class="space-y-2">
@@ -74,15 +83,14 @@
             </div>
           </div>
         
-          <input type="hidden" name="created_by" value="USER_ID"> <!-- Replace with actual user ID -->
-          <input type="hidden" name="updated_by" value="USER_ID"> <!-- Replace with actual user ID -->
-          <input type="hidden" name="created_at" value="CURRENT_TIMESTAMP"> <!-- Replace with actual timestamp -->
+          {{-- <input type="hidden" name="created_by" value="{{}}"> <!-- Replace with actual user ID --> --}}
+          {{-- <input type="hidden" name="updated_by" value="USER_ID"> <!-- Replace with actual user ID --> --}}
+          {{-- <input type="hidden" name="created_at" value="CURRENT_TIMESTAMP"> <!-- Replace with actual timestamp -->
           <input type="hidden" name="updated_at" value="CURRENT_TIMESTAMP"> <!-- Replace with actual timestamp -->
-        
+         --}}
           <div class="flex justify-end">
             <button type="submit" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Submit</button>
           </div>
-        
         </form>
         
       </div>
