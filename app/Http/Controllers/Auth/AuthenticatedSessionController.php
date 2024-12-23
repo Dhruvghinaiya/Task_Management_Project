@@ -27,16 +27,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $req)
     {
-        // $request->authenticate();
-
-        // $req->session()->regenerate();
-
-        // return redirect()->intended(route('dashboard', absolute: false));
         
         $attributes = $req->getinsertTableField();
 
         if(Auth::attempt(['email' => $attributes['email'], 'password' => $attributes['password']])){
-            // session(['user_email' => Auth::user()->email]);
                 if(Auth::user()->role =='admin'){
                     return redirect()->route('admin.dashboard');
                 }

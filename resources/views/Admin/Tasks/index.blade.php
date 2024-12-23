@@ -48,7 +48,7 @@
                             <div class="mt-4">
                                 <span class="inline-block text-sm font-medium 
                                     @if($task->status == 'pending') text-yellow-500 @elseif($task->status == 'in_progress') text-blue-500 @else text-green-500 @endif">
-                                    {{ ucfirst($task->status) }}
+                                    {{ ucwords(str_replace('_',' ',$task->status)) }}
                                 </span>
                             </div>
             

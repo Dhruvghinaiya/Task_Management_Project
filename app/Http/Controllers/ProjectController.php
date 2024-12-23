@@ -34,10 +34,8 @@ class ProjectController extends Controller
         return view('Admin.Projects.index',compact('projects'));
     }
     
-    public function show($id){
-
-         $project = $this->ProjectRepostiry->getById($id);
-          $client= $this->userRepostiry->getById($project->client_id);
+    public function show(Project $project){
+        $client= $this->userRepostiry->getById($project->client_id);
         return view('Admin.Projects.project_details',compact('project','client'));
     }
 
@@ -51,7 +49,6 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $req){
         DB::beginTransaction();
         try {
-            $this->ProjectRepostiry->store($req->getInsertTableField());
           $project=  $this->ProjectRepostiry->store($req->getInsertTableField());
             if ($req->has('employee_id') && !empty($req->employee_id)) {
                 $project->users()->attach($req->employee_id); 
@@ -64,8 +61,8 @@ class ProjectController extends Controller
             return back()->with('error', 'Failed to create project: ' . $e->getMessage());
         }
     }
-    public function edit($id){
-        $project = $this->ProjectRepostiry->getById($id);
+    public function edit(Project $project){
+
         $clients = $this->userRepostiry->getClient();     
         $employees = $this->userRepostiry->getAllEmployees();
         

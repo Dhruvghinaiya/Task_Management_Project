@@ -14,12 +14,7 @@ class ProjectRepository extends BaseRepository
         parent::__construct($model);
     }
   
-    // function getProjectsByEmployee($id)
-    // {
-    //     return $this->newQuery()
-    //         ->where('assigned_to', $id)
-    //         ->get();
-    // }
+
 
     function getProjectsByEmployee($id)
     {

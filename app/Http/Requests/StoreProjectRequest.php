@@ -25,7 +25,7 @@ class StoreProjectRequest extends FormRequest
             return [
                 'name'=>'required',
                 'description'=>'required',
-                'client_id'=>'required',
+                'client_id'=>'required|exists:users,id',
                 'start_date'=>'required',
                 'end_date'=>'required|after_or_equal:start_date',
                 'employee_id'=>'nullable'
@@ -35,7 +35,6 @@ class StoreProjectRequest extends FormRequest
 
     public function getInsertTableField(){
         return [
-            // 'id'=>Str::uuid(), 
             'name' => $this->input('name'),
             'description' => $this->input('description'),   
             'client_id' => $this->input('client_id'),

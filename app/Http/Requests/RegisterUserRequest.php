@@ -24,25 +24,22 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
-    //    dd($this);   
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8', // Password must be at least 8 characters
+            'password' => 'required|string|min:8', 
             'role' => 'required',new Enum(RoleEnum::class), 
         ];
 
     }
     public function getinsertTableField():array
     {
-        // dd(Auth::user()->id);
         return [
-            // 'id' => \Illuminate\Support\Str::uuid(),
             'name' => $this->input('name'),
             'email' => $this->input('email'),
-            'password' => bcrypt($this->input('password')), // Always hash passwords
+            'password' => bcrypt($this->input('password')), 
             'role' => $this->input('role'),
-            'created_by' => Auth::user()->id, // Get the currently authenticated user's ID
+            'created_by' => Auth::user()->id,
             'updated_by' => null,
         ];
     }

@@ -31,11 +31,9 @@ class AdminController extends Controller
         $taskCount = $this->projectRepository->getTasksByClient(AUth::id())->count();
         $clientCount  = $this->projectRepository->getProjectsByClient(Auth::id())->count();
         $projectCount = $this->projectRepository->getProjectsByClient(Auth::id())->count();
-        // $projects = $this->projectRepository->getProjectsByClient(Auth::user()->id)->load('tasks');
-        // return $projects;
+      
         $projects = $this->projectRepository->getProjectsByClient(Auth::user()->id)->load('tasks');
         return view('Client.dashboard',compact('taskCount','clientCount','projectCount','projects'));
-        // return view('Client.dashboard' , compact('clients'));
     } 
     public function projects(User $user){
         $projects=$this->projectRepository->getProjectsByClient($user->id);

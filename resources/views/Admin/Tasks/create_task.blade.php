@@ -1,3 +1,6 @@
+@php
+    use App\Enums\StatusEnum;
+@endphp
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
@@ -24,21 +27,26 @@
           @csrf
           <div class="space-y-2">
             <label for="task_name" class="block text-sm font-medium text-gray-700">Task Name</label>
-            <input type="text" id="task_name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+            <input type="text" id="task_name" name="name" value="{{old('name')}}"  class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+            <x-form-error name='name'/>
           </div>
         
           <div class="space-y-2">
             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-            <textarea id="description" name="description" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            <textarea id="description" name="description"  class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            <x-form-error name="description"/>
           </div>
         
           <div class="space-y-2">
             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
             <select id="status" name="status" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-              <option value="pending">Pending</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
+              @foreach (StatusEnum::cases() as $case )
+              <option value={{$case}}>{{$case}}</option>
+              @endforeach
+              {{-- <option value="in_progress">In Progress</option> --}}
+              {{-- <option value="completed">Completed</option> --}}
             </select>
+            <x-form-error name="Status"/>
           </div>
            
 
@@ -54,6 +62,7 @@
                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                     @endforeach
                 </select>
+                <x-form-error name="project_id"/>
             </div>
 
             <div>
@@ -67,6 +76,7 @@
                         <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                     @endforeach
                 </select>
+                <x-form-error name="assigned_to"/>
             </div>
         </div>
 
@@ -74,12 +84,14 @@
           <div class="grid grid-cols-2 gap-6">
             <div class="space-y-2">
               <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-              <input type="date" id="start_date" name="start_date" required class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+              <input type="date" id="start_date" name="start_date"  class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+              <x-form-error name="start_date"/>
             </div>
         
             <div class="space-y-2">
               <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
               <input type="date" id="end_date" name="end_date" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+              <x-form-error name="end_date"/>
             </div>
           </div>
         

@@ -17,13 +17,7 @@ class UserRepository extends BaseRepository
         return $this->newQuery()
         ->where('role' ,'client')->get();
     }
-    // public function getClient()
-    // {
-    //     return $this->newQuery()
-    //         ->where('role', 'client')
-    //         ->with('client') // Eager load the client relationship
-    //         ->get();
-    // }
+   
 
     public function getAllEmployees()
     {

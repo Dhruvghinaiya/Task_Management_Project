@@ -44,6 +44,7 @@ class TaskController extends Controller
         
     }
     public function create(){
+
         $employees = $this->userRepository->getAllEmployees();
         $projects = $this->projectRepository->getAll();
         $user = Auth::user()->role;
@@ -70,12 +71,12 @@ class TaskController extends Controller
             }
         }
         catch(Throwable $e){
-            DB::rollBack();
-
             if($user=='admin'){
+                DB::rollBack();
                 return redirect()->route('admin.task.index')->with('error',$e->getMessage());
             }   
             elseif($user=='employee'){
+                DB::rollBack();
                 return redirect()->route('employee.task.index')->with('error',$e->getMessage());
             }
 
