@@ -27,14 +27,21 @@
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="mb-4">
 
-          @if (session('success'))
-          <x-AlertSuccess :message="session('success')" />
-          @endif
-          @if (session('error'))
-          <x-AlertSuccess :message="session('error')" />
-          @endif
-        </div>
 
+                  @if (session('message'))
+            @php 
+                $message = session('message');
+            @endphp
+            <div id="alert-message" class="alert-container">
+                @if($message['status'] == 'success')
+                    <x-AlertSuccess :message="$message['description']" />
+                @elseif($message['status'] == 'error')
+                    <x-AlertError :message="$message['description']" />
+                @endif
+            </div>
+
+
+        @endif
         <div class="container mx-auto p-6">
                 <!-- Task Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

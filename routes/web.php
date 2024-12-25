@@ -55,7 +55,7 @@ Route::middleware(['role:admin'])->group(function(){
     Route::get('project/create',[ProjectController::class,'create'])->name('admin.project.create');
     Route::post('project/store',[ProjectController::class,'store'])->name('admin.project.store');
     Route::get('project/edit/{project}',[ProjectController::class,'edit'])->name('admin.project.edit');
-    Route::patch('project/update/{id}',[ProjectController::class,'update'])->name('admin.project.update');
+    Route::patch('project/update/{project}',[ProjectController::class,'update'])->name('admin.project.update');
     Route::delete('project/delete/{id}',[ProjectController::class,'destroy'])->name('admin.project.delete');
     Route::get('project/show/{project}',[ProjectController::class,'show'])->name('admin.project.show');
         
@@ -77,13 +77,15 @@ Route::middleware('role:client')->group(function () {
     Route::Patch('/client/profile/update',[ClientAdminController::class,'update'])->name('client.profile.update');
 
     //project
-    Route::get('/client/project',[ClientProjectController::class,'index'])->name('client.project.index');
-    Route::get('/client/project/show/{id}',[ClientProjectController::class,'show'])->name('client.project.show');
+    Route::get('/client/project',[ProjectController::class,'index'])->name('client.project.index');
+    Route::get('/client/project/show/{project}',[ProjectController::class,'show'])->name('client.project.show');
 
     //task
-    Route::get('client/task',[ClientTaskController::class,'index'])->name('client.task.index');
-    Route::get('client/task/show/{id}',[ClientTaskController::class,'show'])->name('client.task.show');
+    Route::get('client/task',[TaskController::class,'index'])->name('client.task.index');
+    Route::get('client/task/show/{task}',[TaskController::class,'show'])->name('client.task.show');
 
+    //client
+    Route::get('/client/show',[ClientController::class,'index'])->name('client.index');
 
 });
 
@@ -101,9 +103,9 @@ Route::middleware('role:client')->group(function () {
             Route::get('employee/task',[TaskController::class,'index'])->name('employee.task.index');
             Route::get('employee/task/create',[TaskController::class,'create'])->name('employee.task.create');
             Route::post('task/store',[TaskController::class,'store'])->name('employee.task.store');        
-            Route::get('task/show/{id}',[EmployeeTaskController::class,'show'])->name('employee.task.show');
-            Route::get('task/edit/{id}',[EmployeeTaskController::class,'edit'])->name('employee.task.edit');
-            Route::patch('employee/task/update/{id}',[EmployeeTaskController::class,'update'])->name('employee.task.update');
+            Route::get('task/show/{task}',[TaskController::class,'show'])->name('employee.task.show');
+            Route::get('task/edit/{task}',[TaskController::class,'edit'])->name('employee.task.edit');
+            Route::patch('employee/task/update/{id}',[TaskController::class,'update'])->name('employee.task.update');
     });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
@@ -31,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         $attributes = $req->getinsertTableField();
 
         if(Auth::attempt(['email' => $attributes['email'], 'password' => $attributes['password']])){
-                if(Auth::user()->role =='admin'){
+                if(Auth::user()->role == RoleEnum::Admin->value){
                     return redirect()->route('admin.dashboard');
                 }
                 if(Auth::user()->role =='client'){

@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'employee', 'client']);
-            $table->timestamps(); // This adds 'created_at' and 'updated_at' columns
-            $table->uuid('created_by')->nullable();
-            $table->uuid('updated_by')->nullable();
-            $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('updated_by')->references('id')->on('users')->cascadeOnDelete();
+            $table->timestamps(); 
+            $table->foreignUuid('created_by')->nullable()->constant('users')->cascadeOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constant('users')->cascadeOnDelete();
+
         });
 
 

@@ -27,6 +27,8 @@ class UpdateProjectRequest extends FormRequest
             'description'=>'required',
             'client_id'=>'required',
             'start_date'=>'required',
+            'employee_ids' => 'required|array',
+            'employee_ids.*' => 'exists:users,id',
             'end_date'=>'required|after_or_equal:start_date',
         ];
     }
@@ -36,6 +38,7 @@ class UpdateProjectRequest extends FormRequest
             'name' => $this->input('name'),
             'description' => $this->input('description'),   
             'client_id' => $this->input('client_id'),
+            'employee_ids'=>$this->input('employee_ids'),
             'created_by' => $this->input('created_by'),  
             'updated_by' => Auth::user()->id, 
             'start_date' => $this->input('start_date'),

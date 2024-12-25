@@ -37,7 +37,7 @@
                 <!-- Task Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($tasks as $task)
-                        <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-white p-6 rounded-lg  border shadow-md">
                             <!-- Task Card Content -->
                             <h3 class="text-xl font-semibold text-gray-800">{{ $task->name }}</h3>
                             <p class="text-gray-600 mt-2">{{ \Str::limit($task->description, 100) }}</p>

@@ -18,6 +18,12 @@ class UserRepository extends BaseRepository
         ->where('role' ,'client')->get();
     }
    
+    
+    public function getUser($role){
+        return $this->newQuery()
+        ->where('role' ,$role)->get();
+    }
+   
 
     public function getAllEmployees()
     {

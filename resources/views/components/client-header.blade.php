@@ -7,10 +7,10 @@
           <div class="hidden md:block">
             <div class="ml-10 flex  items-baseline  space-x-4">
                  
-              <x-nav-link href="{{route('client.dashboard')}}"  :active="request()->is('dashboard')" id="demo" >Dashboard</x-nav-link>
-              <x-nav-link href="{{route('client.task.index')}}"  :active="request()->is('task')" id="demo" >Task</x-nav-link>
-              <x-nav-link href="{{route('client.project.index')}}" :active="request()->is('project')">Projects</x-nav-link>
-              <x-nav-link href="{{route('client.profile')}}" :active="request()->is('profile')">Profile</x-nav-link>
+              <x-nav-link href="{{route('client.dashboard')}}"  :active="request()->is('client/dashboard')" id="demo" >Dashboard</x-nav-link>
+              <x-nav-link href="{{route('client.task.index')}}"  :active="request()->is('client/task')" id="demo" >Task</x-nav-link>
+              <x-nav-link href="{{route('client.project.index')}}" :active="request()->is('client/project')">Projects</x-nav-link>
+              <x-nav-link href="{{route('client.profile')}}" :active="request()->is('client/profile')">Profile</x-nav-link>
               {{-- <x-nav-link href="{{route('admin.profile',Auth::user()->email)}}" :active="request()->is('profile')">Profile</x-nav-link> --}}
               <x-nav-link href="{{route('logout')}}" :active="request()->is('logout')">logout</x-nav-link>
             </div>

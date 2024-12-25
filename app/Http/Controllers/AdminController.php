@@ -6,13 +6,14 @@ use Illuminate\Support\Str;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Repositories\ProjectRepository;
 use App\Repositories\TaskRepository;
+use App\Http\Controllers\BaseController;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
     protected  UserRepository $userRepository;
     protected  TaskRepository $taskRepository;
@@ -51,11 +52,12 @@ class AdminController extends Controller
         try{
             $this->userRepository->update(Auth::user()->id,$req->getInsertTableField());
             DB::commit();
-            return redirect()->route('admin.profile')->with('success','user profile update successfully...');
+            // return redirect()->route('admin.profile')->with('success','user profile update successfully...');
+            return $this->sendRedirectResponse(route('admin.profile'),'user profile update successfully...');
         }
         catch(Throwable $e){
             DB::rollBack();
-            return redirect()->route('admin.profile')->with('error',$e->getMessage());
+            return $this->sendRedirectBackError($e->getMessage());
         }
     }
 }

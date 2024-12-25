@@ -23,12 +23,13 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
             return [
-                'name'=>'required',
+                'name'=>'required|unique:projects,name',
                 'description'=>'required',
                 'client_id'=>'required|exists:users,id',
                 'start_date'=>'required',
                 'end_date'=>'required|after_or_equal:start_date',
-                'employee_id'=>'nullable'
+                'employee_ids' => 'required|array',
+                'employee_ids.*' => 'exists:users,id',
             ];
            
     }

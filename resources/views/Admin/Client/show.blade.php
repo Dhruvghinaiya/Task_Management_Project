@@ -8,17 +8,12 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+   
 <div class="min-h-full">
-    <x-admin-header/>
-
+  @if($role=='admin')
+      <x-admin-header/>
+    @elseif($role=='client')
+    <x-client-header/>
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">All Client</h1>
@@ -29,7 +24,7 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        @if (session('success'))
+        @if (session('message'))
         <x-AlertSuccess :message="session('success')" />
         @endif
       @if (session('error'))

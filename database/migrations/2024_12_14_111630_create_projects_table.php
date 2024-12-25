@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description');
-            $table->foreignUuid('client_id')->nullable()->constrained('users');
-            $table->foreignUuid('created_by')->constrained('users');
-            $table->foreignUuid('updated_by')->constrained('users');
+            $table->foreignUuid('client_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignUuid('created_by')->constant('users')->cascadeOnDelete();
+            $table->foreignUuid('updated_by')->constant('users')->cascadeOnDelete();
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

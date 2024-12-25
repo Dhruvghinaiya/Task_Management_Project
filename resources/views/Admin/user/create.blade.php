@@ -40,39 +40,34 @@
               @csrf
               
               <div>
-                  <label for="name" class="block text-sm/6 font-medium text-gray-900">Name</label>
+                  <label for="name" class="block text-sm/6 font-medium text-gray-900">Name<span class="text-red-500">*</span></label>
                   <div class="mt-2">
-                    <input type="text" name="name" id="name" autocomplete="name"  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                    @error('name')
-                        <span style="color: red">{{$message}}</span>
-                    @enderror
+                    <input type="text" name="name" value="{{old('name')}}" id="name" autocomplete="name"  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    <x-form-error name='name'/>  
                   </div>
                 </div>
                 <div>
-                  <label for="email" class="block text-sm/6 font-medium text-gray-900">Email </label>
+                  <label for="email" class="block text-sm/6 font-medium text-gray-900">Email<span class="text-red-500">*</span> </label>
                   <div class="mt-2">
-                    <input type="email" name="email" id="email" autocomplete="email"  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                    @error('email')
-                        <span style="color: red">{{$message}}</span>
-                    @enderror
+                    <input type="email" name="email" id="email" value="{{old('email')}}" autocomplete="email"  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    <x-form-error name='email'/>  
+
                   </div>
                 </div>
                 
         
               <div>
                 <div class="flex items-center justify-between">
-                  <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+                  <label for="password" class="block text-sm/6 font-medium text-gray-900">Password<span class="text-red-500">*</span></label>
                 </div>
                 <div class="mt-2">
-                  <input type="password" name="password" id="password" autocomplete="current-password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                  <input type="password" name="password" value="{{old('password')}}" id="password" autocomplete="current-password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                 </div>
-                
-                @error('password')
-                    <span  style="color: red">{{$message}}</span>
-                @enderror
+                <x-form-error name='password'/>  
+
               </div>
               <div>
-                  <label for="email" class="block text-sm/6 font-medium text-gray-900">Role</label>
+                  <label for="email" class="block text-sm/6 font-medium text-gray-900">Role<span class="text-red-500">*</span></label>
                   <div class="mt-2">
                     {{-- <input type="email" name="email" id="email" autocomplete="email"  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"> --}}
                     <select name="role" id="role" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">

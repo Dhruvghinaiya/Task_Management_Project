@@ -20,6 +20,12 @@ class TaskRepository extends BaseRepository
             ->get();
     }
 
+    function getTasksByOtherEmployee($id)
+    {
+        return $this->newQuery()
+            ->where('created_by', $id)
+            ->get();
+    }
     public function getAllClients()
     {
         return $this->newQuery()

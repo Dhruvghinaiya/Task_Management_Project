@@ -10,15 +10,14 @@ use App\Models\Project;
 use App\Repositories\ClientRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpParser\ErrorHandler\Throwing;
 use Ramsey\Uuid\Guid\Guid;
 use Throwable;
 
-class ProjectController extends Controller
+class ProjectController extends BaseController
 {
     protected ClientRepository $clientRepository;
     protected ProjectRepository $ProjectRepostiry;
@@ -30,13 +29,30 @@ class ProjectController extends Controller
         $this->userRepostiry = $userRepostiry;
     }
     public function index(){
-        $projects = $this->ProjectRepostiry->getAll();
-        return view('Admin.Projects.index',compact('projects'));
+        $role = Auth::user()->role;
+        
+        if($role=='admin'){
+            $projects = $this->ProjectRepostiry->getAll();
+            return view('Admin.Projects.index',compact('projects'));
+        }
+        elseif($role=='client'){
+            $projects = $this->ProjectRepostiry->getProjectsByClient(Auth::id());
+            return view('Client.project.index',compact('projects'));
+        }
+
     }
     
     public function show(Project $project){
-        $client= $this->userRepostiry->getById($project->client_id);
-        return view('Admin.Projects.project_details',compact('project','client'));
+        $role = Auth::user()->role;
+        if($role=='admin'){
+            $client= $this->userRepostiry->getById($project->client_id);
+            return view('Admin.Projects.project_details',compact('project','client'));
+        }
+        else if($role=='client'){
+            $project = $this->ProjectRepostiry->getById($project->id);
+            $client= $this->userRepostiry->getById($project->client_id);
+          return view('Client.project.show',compact('project','client'));
+        }
     }
 
     public function create(){
@@ -47,42 +63,50 @@ class ProjectController extends Controller
 
     }
     public function store(StoreProjectRequest $req){
+
         DB::beginTransaction();
         try {
           $project=  $this->ProjectRepostiry->store($req->getInsertTableField());
-            if ($req->has('employee_id') && !empty($req->employee_id)) {
-                $project->users()->attach($req->employee_id); 
+            if ($req->has('employee_ids') && !empty($req->employee_ids)) {
+                $project->users()->attach($req->employee_ids); 
             }
             DB::commit();
-            return redirect()->route('admin.project.index')->with('success', 'New project created successfully');
-
+            return $this->sendRedirectResponse(route('admin.project.index'),'New project created successfully');
+            
         } catch (Throwable $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to create project: ' . $e->getMessage());
+            return $this->sendRedirectBackError($e->getMessage());
         }
     }
     public function edit(Project $project){
-
-        $clients = $this->userRepostiry->getClient();     
-        $employees = $this->userRepostiry->getAllEmployees();
         
+        $clients = $this->userRepostiry->getUser('client');     
+        $employees = $this->userRepostiry->getUser('employee');
         return view('Admin.Projects.edit',compact('project','clients','employees'));
     }
 
-    public function update(UpdateProjectRequest $req ,$id){
+   
 
-        DB::beginTransaction();
-        try{
-             $this->ProjectRepostiry->update($id,$req->getInsertTableField());
-            DB::commit();
-            return redirect()->route('admin.project.index')->with('success','Edit Project Successfully...');
-        }
-        catch(Throwable $e){
-            DB::rollBack();
-            return back()->with('error',$e->getMessage());
-        }
+    public function update(UpdateProjectRequest $req, Project $project)
+{   
 
+    DB::beginTransaction();
+    try {
+        $this->ProjectRepostiry->update($project->id, $req->getInsertTableField());
+
+        if ($req->has('employee_ids') && !empty($req->employee_ids)) {
+            $project->users()->sync($req->employee_ids);
+        } else {
+            $project->users()->detach();
+        }
+        DB::commit();
+        return $this->sendRedirectResponse(route('admin.project.index'), 'Project Updated Successfully');
+    } catch (Throwable $e) {
+        DB::rollBack();
+        return $this->sendRedirectBackError($e->getMessage());
     }
+}
+
 
     public function destroy($id){
 
@@ -90,11 +114,13 @@ class ProjectController extends Controller
         try{
             $this->ProjectRepostiry->destroy($id);
             DB::commit();
-            return redirect()->route('admin.project.index')->with('success','project delete successfull');
+            return $this->sendRedirectResponse(route('admin.project.index'),'project delete successfully');
+       
         }
         catch(Throwable $e){
             DB::rollBack();
-            return redirect()->route('admin.project.index')->with('error',$e->getMessage());
+            
+            return $this->sendRedirectBackError($e->getMessage());
         }
 
     }

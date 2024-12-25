@@ -9,3 +9,14 @@
         {{ $slot }}
     </span>
 </div>
+
+
+<script>
+    // Set a timeout to remove the alert after 3 seconds
+    setTimeout(function() {
+        var alertMessage = document.getElementById('alert-message');
+        if (alertMessage) {
+            alertMessage.style.display = 'none'; // Hide the alert
+        }
+    }, 3000); 
+</script>

@@ -10,9 +10,10 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BaseController;
 use Throwable;
 
-class EmployeeController extends Controller
+class EmployeeController extends BaseController
 {
     protected UserRepository $userRepository;
     protected TaskRepository  $taskRepository;
@@ -45,11 +46,11 @@ class EmployeeController extends Controller
         try{
             $this->userRepository->update(Auth::user()->id,$req->getInsertTableField());
             DB::commit();
-            return redirect()->route('employee.profile')->with('success','user profile update successfully...');
+            return $this->sendRedirectResponse(route('employee.profile'),'user profile update successfully...');
         }
         catch(Throwable $e){
             DB::rollBack();
-            return redirect()->route('employee.profile')->with('success',$e->getMessage());
+            return $this->sendRedirectBackError($e->getMessage());
         }
     }
 }

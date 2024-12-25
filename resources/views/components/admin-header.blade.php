@@ -6,15 +6,12 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex  items-baseline  space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              {{-- <a href="{{route('admin.dashboard')}}" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a> --}}
-              {{-- <a href="{{route('task.index')}}"  class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Tasks</a> --}}
               
-              <x-nav-link href="{{route('admin.dashboard')}}"  :active="request()->is('dashboard')" id="demo" >Dashboard</x-nav-link>
+              <x-nav-link href="{{route('admin.dashboard')}}"  :active="request()->is('admin/dashboard')" id="demo" >Dashboard</x-nav-link>
               <x-nav-link href="{{route('admin.task.index')}}"  :active="request()->is('admin/task')" id="demo" >Task</x-nav-link>
               <x-nav-link href="{{route('admin.project.index')}}" :active="request()->is('project')">Projects</x-nav-link>
               <x-nav-link href="{{route('admin.client.index')}}" :active="request()->is('client')">Client</x-nav-link>
-              <x-nav-link href="{{route('admin.user.index')}}" :active="request()->is('user')">View Users</x-nav-link>
+              <x-nav-link href="{{route('admin.user.index')}}" :active="request()->is('user')">Users</x-nav-link>
               {{-- <x-nav-link href="{{route('admin.client.create')}}" :active="request()->is('user')">Add New user</x-nav-link> --}}
               <x-nav-link href="{{route('admin.profile')}}" :active="request()->is('profile')">Profile</x-nav-link>
               <x-nav-link href="{{route('logout')}}" :active="request()->is('logout')">logout</x-nav-link>

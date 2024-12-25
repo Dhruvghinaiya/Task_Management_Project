@@ -47,7 +47,7 @@
     </a>
 
     <!-- Client Card -->
-    <a href="" class="card bg-white p-6 rounded-lg border hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+    <a href="{{route('client.index')}}" class="card bg-white p-6 rounded-lg border hover:shadow-xl transition-all duration-300 transform hover:scale-105">
       <h2 class="text-xl font-semibold text-gray-700">Total Clients</h2>
       <p class="text-3xl font-bold text-purple-500">{{$clientCount}}</p>
       <p class="text-gray-500">View All Clients</p>

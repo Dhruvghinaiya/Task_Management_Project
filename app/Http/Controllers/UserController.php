@@ -6,13 +6,14 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
 
-class UserController extends Controller
+class UserController extends BaseController
 {   protected UserRepository $userRepository;
     public function __construct(UserRepository $userRepository)
     {
@@ -30,9 +31,10 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $req)
     {
-          return view('Admin.user.create');
+        $role = $req->role;
+          return view('Admin.user.create',compact('role'));
     }
 
     /**
@@ -44,11 +46,11 @@ class UserController extends Controller
         try{
             $this->userRepository->store($req->getinsertTableField());
             DB::commit();
-            return redirect()->route('admin.dashboard')->with('success','new user created successfully.');
+            return $this->sendRedirectResponse(route('admin.dashboard'),'new user created successfully.');
         }
         catch(Throwable $e){
             DB::rollBack();
-            return redirect()->route('admin.user.create')->with('error',$e->getMessage());
+            return $this->sendRedirectBackError($e->getMessage());
         }
 
 
@@ -68,23 +70,25 @@ class UserController extends Controller
         try {
             $this->userRepository->update($id, $req->getinsertTableField());
             DB::commit();
-            return redirect()->route('admin.user.index')->with('success', 'User Updated Successfully');
+            return $this->sendRedirectResponse(route('admin.user.index'),'User Updated Successfully');
         } catch (Throwable $e) {
             DB::rollBack();
-            return redirect()->route('admin.user.edit',$id)->with('error', $e->getMessage());
+            return $this->sendRedirectBackError($e->getMessage());
         }
     }
-
+    
     public function destroy($id)
     {
         DB::beginTransaction();
         try {
             $this->userRepository->destroy($id);
             DB::commit();
-            return redirect()->route('admin.user.index')->with('success', 'User Deleted Successfully');
+            // return redirect()->route('admin.user.index')->with('success', 'User Deleted Successfully');
+            return $this->sendRedirectResponse(route('admin.user.index'),'User deleted Successfully');
         } catch (Throwable $e) {
             DB::rollBack();
-            return redirect()->route('admin.user.index')->with('error', $e->getMessage());
+            // return redirect()->route('admin.user.index')->with('error', $e->getMessage());
+            return $this->sendRedirectBackError($e->getMessage());
         }
     }
    

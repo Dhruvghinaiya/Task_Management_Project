@@ -62,7 +62,34 @@
                         </div>
                     @endforeach
                 </div>
+                <p class="mt-12 text-lg">Your created  Task</p>
+                <div class="grid grid-cols-1 mt md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  @foreach($createdTasks as $tasks)
+                      <div class="bg-white p-6 rounded-lg shadow-md">
+                          <!-- Task Card Content -->
+                          <h3 class="text-xl font-semibold text-gray-800">{{ $tasks->name }}</h3>
+                          <p class="text-gray-600 mt-2">{{ \Str::limit($tasks->description, 100) }}</p>
+          
+                          <!-- Task Status -->
+                          <div class="mt-4">
+                              <span class="inline-block text-sm font-medium 
+                                  @if($tasks->status == 'pending') text-yellow-500 @elseif($tasks->status == 'in_progress') text-blue-500 @else text-green-500 @endif">
+                                  {{ ucfirst($tasks->status) }}
+                              </span>
+                          </div>
+          
+                          <!-- Action Button -->
+                          <div class="mt-6 text-right">
+                              <a href="{{ route('employee.task.show', $tasks->id) }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                  View Details
+                              </a>
+                          </div>
+                      </div>
+                  @endforeach
+              </div>
+                
             </div>
+            
             
 
             </div> 
@@ -70,6 +97,15 @@
     
           </div>
         </div>
+
+       
+      
+
+      </div> 
+  
+
+    </div>
+  </div>
         
 
       </div>

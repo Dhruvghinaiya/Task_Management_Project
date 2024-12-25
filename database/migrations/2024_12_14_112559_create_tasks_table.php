@@ -12,23 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Primary key as UUID
-            $table->string('name'); // Task name
-            $table->text('description')->nullable(); // Description, nullable
-            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending'); // Enum for status
-            $table->uuid('project_id'); // Foreign key to projects table
-            $table->uuid('assigned_to')->nullable(); // Foreign key to users table, nullable
-            $table->date('start_date')->nullable(); // Start date
-            $table->date('end_date')->nullable(); // End date
-            $table->uuid('created_by'); // Foreign key to users table
-            $table->uuid('updated_by'); // Foreign key to users table
-            $table->timestamps(); // created_at and updated_at
+            $table->uuid('id')->primary(); 
+            $table->string('name'); 
+            $table->text('description')->nullable(); 
+            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending'); 
+            // $table->uuid('project_id'); 
+            // $table->uuid('assigned_to')->nullable(); 
+            $table->date('start_date')->nullable(); 
+            $table->date('end_date')->nullable(); 
+            // $table->uuid('created_by'); 
+            // $table->uuid('updated_by'); 
+            $table->timestamps(); 
 
-            // Foreign key constraints
-            $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
-            $table->foreign('assigned_to')->references('id')->on('users')->nullOnDelete();
-            $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('updated_by')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignUuid('project_id')->constant('projects')->cascadeOnDelete();
+            $table->foreignUuid('assigned_to')->constant('users')->cascadeOnDelete();
+            $table->foreignUuid('created_by')->constant('users')->cascadeOnDelete();
+            $table->foreignUuid('updated_by')->constant('id')->on('users')->cascadeOnDelete();
         });
     }
 

@@ -8,14 +8,7 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+    
 <div class="min-h-full">
     <x-admin-header/>
 
@@ -33,19 +26,25 @@
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="mb-4">
 
-          @if (session('success'))
-          <x-AlertSuccess :message="session('success')" />
-          @endif
-          @if (session('error'))
-          <x-AlertSuccess :message="session('error')" />
-          @endif
-        </div>
+          @if (session('message'))
+          @php 
+              $message = session('message');
+          @endphp
+          <div id="alert-message" class="alert-container">
+              @if($message['status'] == 'success')
+                  <x-AlertSuccess :message="$message['description']" />
+              @elseif($message['status'] == 'error')
+                  <x-AlertError :message="$message['description']" />
+              @endif
+          </div>
+
+         
+      @endif
         <div class="container mx-auto p-4">
           <!-- Grid to show 3 cards in a row -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               
             @foreach ($projects as $project )
-                
               <div class="bg-white p-6 rounded-lg shadow-md border rounded-t-lg">
                 <h2 class="text-xl font-semibold text-gray-800">{{$project->name}}</h2>
                 <p class="text-gray-600 mt-2"> {{  \Illuminate\Support\Str::limit($project->description,50)}}</p>

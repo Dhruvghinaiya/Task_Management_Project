@@ -8,14 +8,7 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+    
 <div class="min-h-full">
     <x-admin-header/>
 
@@ -26,16 +19,31 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <div class="mb-4">
+        {{-- <div class="mb-4">
 
           @if (session('success'))
           <x-AlertSuccess :message="session('success')" />
           @endif
           @if (session('error'))
-          <x-AlertSuccess :message="session('error')" />
+          <x-AlertError :message="session('error')" />
           @endif
-        </div>
+        </div> --}}
 
+        
+        @if (session('message'))
+        @php 
+            $message = session('message');
+        @endphp
+        <div id="alert-message" class="alert-container">
+            @if($message['status'] == 'success')
+                <x-AlertSuccess :message="$message['description']" />
+            @elseif($message['status'] == 'error')
+                <x-AlertError :message="$message['description']" />
+            @endif
+        </div>
+    @endif
+
+    
         <div class="container mx-auto p-6">
   <!-- Dashboard Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -55,7 +63,7 @@
     </a>
 
     <!-- Client Card -->
-    <a href="{{route('admin.client.show')}}" class="card bg-white p-6 rounded-lg border hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+    <a href="{{route('admin.client.index')}}" class="card bg-white p-6 rounded-lg border hover:shadow-xl transition-all duration-300 transform hover:scale-105">
       <h2 class="text-xl font-semibold text-gray-700">Total Clients</h2>
       <p class="text-3xl font-bold text-purple-500">{{$clientCount}}</p>
       <p class="text-gray-500">View All Clients</p>

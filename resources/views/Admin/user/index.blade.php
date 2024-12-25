@@ -16,7 +16,7 @@
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">User</h1>
         <div class="flex gap-5 ml-auto">
-          <a href="{{route('admin.user.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <a href="{{route('admin.user.create',['role'=>'employee'])}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Add New User
           </a>
          
@@ -28,13 +28,20 @@
         <div class="container mx-auto">
             <h1 class="text-3xl font-bold text-center mb-6">Users</h1>
             <div class="mb-3">
+              
+          @if (session('message'))
+          @php 
+              $message = session('message');
+          @endphp
+          <div id="alert-message" class="alert-container">
+              @if($message['status'] == 'success')
+                  <x-AlertSuccess :message="$message['description']" />
+              @elseif($message['status'] == 'error')
+                  <x-AlertError :message="$message['description']" />
+              @endif
+          </div>
+      @endif
 
-              @if (session('success'))
-              <x-AlertSuccess :message="session('success')" />
-              @endif
-              @if (session('error'))
-              <x-AlertError :message="session('error')" />
-              @endif
             </div>
             <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                 <thead>
@@ -85,4 +92,4 @@
 </body>
 </html>
 
-  
+

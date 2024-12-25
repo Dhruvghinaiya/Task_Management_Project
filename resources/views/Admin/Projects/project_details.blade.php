@@ -8,14 +8,7 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+  
 <div class="min-h-full">
     <x-admin-header/>
 
@@ -134,8 +127,8 @@
     <div class="mt-8">
         <h2 class="text-2xl font-semibold text-gray-900 mb-4">Client Details</h2>
         <div class="bg-gray-50 rounded-lg p-4">
-            <p><span class="font-medium text-gray-600">Company Name:</span> {{ $project->client->company_name }}</p>
-            <p class="mt-2"><span class="font-medium text-gray-600">Contact Number:</span> {{ $project->client->contact_number }}</p>
+            <p><span class="font-medium text-gray-600">Company Name:</span> {{ $project->client->clientDetail->company_name }}</p>
+            <p class="mt-2"><span class="font-medium text-gray-600">Contact Number:</span> {{ $project->client->clientDetail->contact_number }}</p>
         </div>
     </div>
 @endif

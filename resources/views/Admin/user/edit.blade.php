@@ -23,9 +23,6 @@
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">User</h1>
         <div class="flex gap-5 ml-auto">
-          <a href="{{route('admin.client.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Add User
-          </a>
         
         </div>
       </div>
@@ -34,18 +31,7 @@
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="container mx-auto mt-10">
   
-          <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Table</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-100 font-sans">
-
+        
     <div class="container mx-auto mt-10">
         <h2 class="text-2xl mb-4">Edit User</h2>
        
@@ -63,7 +49,7 @@
             <input type="text" name="created_by" value="{{$users->created_by}}" hidden>
 
             <div class="mb-4">
-                <label for="name" class="block text-gray-600 font-medium mb-2">Name</label>
+                <label for="name" class="block text-gray-600 font-medium mb-2">Name<span class="text-red-500">*</span></label>
                 <input 
                     type="text" 
                     name="name" 
@@ -78,14 +64,14 @@
 
             <div class="mb-4">
         <div class="mb-4">
-            <label for="email" class="block text-gray-600 font-medium mb-2">Email</label>
+            <label for="email" class="block text-gray-600 font-medium mb-2">Email<span class="text-red-500">*</span></label>
             <input 
                 type="text" 
                 name="email" 
                 id="email" 
                 class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value="{{ old('email', $users->email) }}" 
-                required
+                
             >
             @error('email')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -94,7 +80,7 @@
 
         <!-- Contact Number Field -->
         <div class="mb-4">
-            <label for="role" class="block text-gray-600 font-medium mb-2">Role</label>
+            <label for="role" class="block text-gray-600 font-medium mb-2">Role<span class="text-red-500">*</span></label>
             <select name="role" id="role" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
               <option value="admin" {{ $users->role == 'admin' ? 'selected' : '' }}>Admin</option>
               <option value="client" {{ $users->role == 'client' ? 'selected' : '' }}>Client</option>

@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('client_details', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Primary key as UUID
-            $table->uuid('user_id'); // UUID foreign key for user_id
-            $table->string('company_name'); // Company name
-            $table->string('contact_number'); // Contact number
-            $table->timestamps(); // created_at and updated_at columns
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->uuid('id')->primary(); 
+            $table->string('company_name'); 
+            $table->string('contact_number'); 
+            $table->timestamps(); 
+            $table->foreignUuid('user_id')->constant('users')->cascadeOnDelete();
         });
     }
 

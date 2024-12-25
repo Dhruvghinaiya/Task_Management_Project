@@ -8,14 +8,7 @@
     @Vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="h-full">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
+  
 <div class="min-h-full">
     <x-admin-header/>
 
@@ -32,76 +25,98 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <div class="max-w-md mx-auto bg-white border rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-2xl font-bold mb-6 text-gray-700">Add Client</h2>
+
+        
+        @if (session('success'))
+        <x-AlertSuccess :message="session('success')" />
+        @endif
+        @if (session('error'))
+        <x-AlertError :message="session('error')" />
+        @endif
+
+        <div class="flex min-h-full flex-col justify-center px-6 lg:px-8 ">
+          <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             
-            <form action="{{route('admin.client.store')}}" method="POST" class="space-y-4">
-                @csrf
-              <!-- User ID (Foreign Key, Dropdown) -->
-              <div>
-                <label for="user_id" class="block text-gray-700 font-medium mb-2">User</label>
-                <select name="user_id" id="user_id" 
-                  class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500">
-                  <option value="" disabled selected>Select a user</option>
-                  <!-- Loop through users -->
-                  @foreach ($data as $client)
-                    <option value="{{$client->id}}">{{$client->name}}</option>
-                  @endforeach
-                </select>
-                @error('user_id')
-                <span style="color: red">{{$message}}</span>
-            @enderror
-              </div>
-              
-              <!-- Company Name -->
-              <div>
-                <label for="company_name" class="block text-gray-700 font-medium mb-2">Company Name</label>
-                <input 
-                  type="text" 
-                  name="company_name" 
-                  id="company_name" 
-                  class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter company name" 
-                  value="{{ old('company_name') }}" 
-                  required>
-              </div>
-              @error('company_name')
-              <span style="color: red">{{$message}}</span>
-          @enderror
-              
-              <!-- Contact Number -->
-              <div>
-                <label for="contact_number" class="block text-gray-700 font-medium mb-2">Contact Number</label>
-                <input 
-                  type="text" 
-                  name="contact_number" 
-                  id="contact_number" 
-                  class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter contact number" 
-                  value="{{ old('contact_number') }}" 
-                  required>
-              </div>
-              @error('contact_number')
-              <span style="color: red">{{$message}}</span>
-          @enderror
-              
-              {{-- <!-- Created At (Hidden) -->
-              <input type="hidden" name="created_at" value="{{ now() }}">
-              
-              <!-- Updated At (Hidden) -->
-              <input type="hidden" name="updated_at" value="{{ now() }}">
-          
-              <!-- Submit Button --> --}}
-              <div>
-                <button 
-                  type="submit" 
-                  class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500">
-                  Save
-                </button>
-              </div>
-            </form>
+            <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign Up to your account</h2>
           </div>
+          <div class=" sm:mx-auto sm:w-full sm:max-w-sm">
+            <form class="space-y-6" action="{{ route('admin.client.store') }}" method="POST">
+              @csrf
           
+              <!-- Name Field -->
+              <div>
+                  <label for="name" class="block text-sm/6 font-medium text-gray-900">Name<span class="text-red-500">*</span></label>
+                  <div class="mt-2">
+                      <input type="text" name="name" value="{{ old('name') }}" id="name" autocomplete="name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                      <x-form-error name="name"/>
+                  </div>
+              </div>
+          
+              <!-- Email Field -->
+              <div>
+                  <label for="email" class="block text-sm/6 font-medium text-gray-900">Email<span class="text-red-500">*</span></label>
+                  <div class="mt-2">
+                      <input type="email" name="email" id="email" value="{{ old('email') }}" autocomplete="email" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                      <x-form-error name="email"/>
+                  </div>
+              </div>
+          
+              <!-- Password Field -->
+              <div>
+                  <div class="flex items-center justify-between">
+                      <label for="password" class="block text-sm/6 font-medium text-gray-900">Password<span class="text-red-500">*</span></label>
+                  </div>
+                  <div class="mt-2">
+                      <input type="password" name="password" value="{{ old('password') }}" id="password" autocomplete="current-password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                  </div>
+                  <x-form-error name="password"/>
+              </div>
+          
+              <!-- Role Field -->
+              <div>
+                  <label for="role" class="block text-sm/6 font-medium text-gray-900">Role<span class="text-red-500">*</span></label>
+                  <div class="mt-2">
+                      <select name="role" id="role" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                              <option value="client">Client</option>
+                      </select>
+                  </div>
+              </div>
+          
+              <!-- Company Name Field -->
+              <div>
+                  <label for="company_name" class="block text-sm/6 font-medium text-gray-900">Company Name<span class="text-red-500">*</span></label>
+                  <div class="mt-2">
+                      <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                      <x-form-error name="company_name"/>
+                  </div>
+              </div>
+          
+              <!-- Contact Number Field -->
+              <div>
+                  <label for="contact_number" class="block text-sm/6 font-medium text-gray-900">Contact Number<span class="text-red-500">*</span></label>
+                  <div class="mt-2">
+                      <input type="text" name="contact_number" id="contact_number" value="{{ old('contact_number') }}" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                      <x-form-error name="contact_number"/>
+                  </div>
+              </div>
+          
+              <!-- Submit Button -->
+              <div>
+                  <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button>
+              </div>
+          
+              <!-- Back Button -->
+              <div>
+                  <a href="{{ route('admin.dashboard') }}" class="flex w-full justify-center rounded-md bg-red-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600">Back</a>
+              </div>
+          </form>
+            
+          </div>
+        
+           
+          </div>
+        </div>
+      
       </div>
     </main>
   </div>
